@@ -278,7 +278,7 @@ BF_ASSERT(BF___i(,i,tl,2,tr,fs,(7)(a)(b)), (,i,tl,9,tr,fs,a,(b)))
 // This is run before execution to optimize the code.
 #if 0
 #define BF_MERGE(...) __VA_ARGS__,
-#elif 1
+#else
 #define BF_MERGE(...) BF_SCAN(BF_TUPLE_EAT2 BF_CM(,(,),,,,,MERGE0,__VA_ARGS__,,,,,))
 
 #define BF_MERGE1(P,o,a1,...)               (,(,BF_PSCAN P##o,P##a1)                                         ,,,,,BF_PCAT(MERGE,BF_IS_EMPTY(,P##a1)),P##__VA_ARGS__)
