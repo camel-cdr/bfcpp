@@ -62,7 +62,7 @@ Since the preprocessor can't distinguish between the standard Brainfuck symbols,
 | [        | B           | Jump past the matching ] if the cell at the pointer is 0          |
 | ]        | E           | Jump back to the matching [ if the cell at the pointer is nonzero |
 
-\*Note that there might be extra space inserted between symbols, because all preprocessors I know of disagree when spaces are inserted between `a` and `b` in `S(a)b` with `#define S(x) x`.
+\*Note that there might be extra space inserted between symbols, because all preprocessors I know of disagree when spaces are inserted in `S(a)b` with `#define S(x) x` and different tokens in `a` and `b`.
 
 ## Compilers/preprocessors
 
