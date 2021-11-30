@@ -12,4 +12,4 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Run Test
-      run: c99 -DBF_DEBUG bf.c && ./a.out
+      run: c99 -DBF_TEST bf.c && ./a.out

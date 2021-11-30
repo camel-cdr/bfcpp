@@ -1,10 +1,10 @@
 #define BF_CAT(a,b) a##b
 #define BF_PCAT(a,b) BF_CAT(a,b)
 
-// If BF_DO_ASSERT is defined then BF_ASSERT(a,b) macros
+// If BF_TEST is defined then BF_ASSERT(a,b) macros
 // are expanded. These form a valid C program that can be compiled
 // and executed to test whether all assertions pass.
-#ifdef BF_DO_ASSERT
+#ifdef BF_TEST
 
 #include <assert.h>
 #include <string.h>
@@ -408,7 +408,7 @@ BF_ASSERT(BF___R0(,,(3)(2)(1)(_),4,(5)(6)(7)(8)(_),,(Q)), (,,(8)(7)(6)(5)(4)(3)(
 
 
 
-#ifdef BF_DO_ASSERT
+#ifdef BF_TEST
 	return 0;
 }
 
