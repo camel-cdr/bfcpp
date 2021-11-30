@@ -1,0 +1,79 @@
+diff --git a/tccpp.c b/tccpp.c
+index 6b828c9..f451987 100644
+--- a/tccpp.c
++++ b/tccpp.c
+@@ -3340,8 +3340,25 @@ static int next_argstream(Sym **nested_list, TokenString *ws_str)
+         return tok;
+     }
+ }
+ 
++static inline uintmax_t
++gettime(void)
++{
++#if defined(CLOCK_PROCESS_CPUTIME_ID)
++	struct timespec t;
++	clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &t);
++	return t.tv_nsec + (uintmax_t)t.tv_sec * 1000000000;
++#elif defined(CLOCK_MONOTONIC_RAW)
++	struct timespec t;
++	clock_gettime(CLOCK_MONOTONIC_RAW, &t);
++	return t.tv_nsec + (uintmax_t)t.tv_sec * 1000000000;
++#else
++	return ((uintmax_t)clock() * 1000000000) / CLOCKS_PER_SEC;
++#endif
++}
++
++
+ /* do macro substitution of current token with macro 's' and add
+    result to (tok_str,tok_len). 'nested_list' is the list of all
+    macros we got inside to avoid recursing. Return non zero if no
+    substitution needs to be done */
+@@ -3365,15 +3382,22 @@ static int macro_subst_tok(
+         snprintf(buf, sizeof(buf), "%d", t);
+         cstrval = buf;
+         t1 = TOK_PPNUM;
+         goto add_cstr1;
++    } else if (tok == TOK___TIMER__) {
++        static uintmax_t cur = 0;
++        uintmax_t time = gettime();
++        snprintf(buf, sizeof(buf), "%.10f", (time - cur) * 1.0/1000000000);
++        cur = time;
++        cstrval = buf;
++        t1 = TOK_PPNUM;
++        goto add_cstr1;
+     } else if (tok == TOK___FILE__) {
+         cstrval = file->filename;
+         goto add_cstr;
+     } else if (tok == TOK___DATE__ || tok == TOK___TIME__) {
+         time_t ti;
+         struct tm *tm;
+-
+         time(&ti);
+         tm = localtime(&ti);
+         if (tok == TOK___DATE__) {
+             snprintf(buf, sizeof(buf), "%s %2d %d",
+@@ -3853,8 +3877,9 @@ ST_FUNC void tccpp_new(TCCState *s)
+     define_push(TOK___LINE__, MACRO_OBJ, NULL, NULL);
+     define_push(TOK___FILE__, MACRO_OBJ, NULL, NULL);
+     define_push(TOK___DATE__, MACRO_OBJ, NULL, NULL);
+     define_push(TOK___TIME__, MACRO_OBJ, NULL, NULL);
++    define_push(TOK___TIMER__, MACRO_OBJ, NULL, NULL);
+     define_push(TOK___COUNTER__, MACRO_OBJ, NULL, NULL);
+ }
+ 
+ ST_FUNC void tccpp_delete(TCCState *s)
+diff --git a/tcctok.h b/tcctok.h
+index d4c1ef5..e4fe6fc 100644
+--- a/tcctok.h
++++ b/tcctok.h
+@@ -89,8 +89,10 @@
+      DEF(TOK___LINE__, "__LINE__")
+      DEF(TOK___FILE__, "__FILE__")
+      DEF(TOK___DATE__, "__DATE__")
+      DEF(TOK___TIME__, "__TIME__")
++     DEF(TOK___SECONDS__, "__SECONDS__")
++     DEF(TOK___TIMER__, "__TIMER__")
+      DEF(TOK___FUNCTION__, "__FUNCTION__")
+      DEF(TOK___VA_ARGS__, "__VA_ARGS__")
+      DEF(TOK___COUNTER__, "__COUNTER__")
+      DEF(TOK___HAS_INCLUDE, "__has_include")
