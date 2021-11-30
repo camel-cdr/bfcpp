@@ -1,5 +1,51 @@
 # Optimizing Brainfuck interpreter in the C preprocessor
 
+A C99 confirming\* optimizing Brainfuck implementation written (and executed) only using the C preprocessor.
+
+\*If you find something that does not confirm to the standard or is unspecified/undefined, please open an issue.
+
+# Example
+
+<table><tr><td><b>Hello World</b></td><td><b>Output</b></td></tr><tr><td>
+
+```c
+#include "bf.c"
+
+BF((),I,I,I,I,I,I,I,I,B,R,I,I,I,I,B,R,I,I,R,I,I,
+      I,R,I,I,I,R,I,L,L,L,L,D,E,R,I,R,I,R,D,R,R,
+      I,B,L,E,L,D,E,R,R,A,R,D,D,D,A,I,I,I,I,I,I,
+      I,A,A,I,I,I,A,R,R,A,L,D,A,L,A,I,I,I,A,D,D,
+      D,D,D,D,A,D,D,D,D,D,D,D,D,A,R,R,I,A,R,I,I,A)
+```
+
+</td><td>
+
+```
+Hello\x20World!\n
+```
+
+</td></tr></table>
+
+
+<table><tr><td><b>Multiplication (0xc*0xa)</b></td><td><b>Output (0xc*0xa=0x78)</b></td></tr><tr><td>
+
+```c
+#include "bf.c"
+
+BF((c,a),G,R,G,L,B,R,B,D,R,I,R,I,L,L,E,R,
+         R,B,D,L,L,I,R,R,E,L,L,L,D,E,R,R,O)
+```
+
+</td><td>
+
+```
+(78)
+```
+
+</td></tr></table>
+
+Check out [examples.c](examples.c) for more examples.
+
 # Getting started
 
 Since the preprocessor can't distinguish between the standard Brainfuck symbols, this implementation uses the following alternative instruction names:
@@ -10,36 +56,26 @@ Since the preprocessor can't distinguish between the standard Brainfuck symbols,
 | <        | L           | Move the tape head to the left                                    |
 | +        | I           | Increment the tape head                                           |
 | -        | D           | Decrement the tape head                                           |
-| .        | A           | Output the tape head as ASCII                                     |
+| .        | A           | Output the tape head as ASCII\*                                   |
 |          | O           | Output the tape head as a hexadecimal number                      |
 | ,        | G           | Read an input character and set the tape head to it               |
 | [        | B           | Jump past the matching ] if the cell at the pointer is 0          |
 | ]        | E           | Jump back to the matching [ if the cell at the pointer is nonzero |
 
-
-The instructions can be executed as follows:
-
-```c
-#include "bf.c"
-BF((c,a),G,R,G,L,B,R,B,D,R,I,R,I,L,L,E,R,R,B,D,L,L,I,R,R,E,L,L,L,D,E,R,R,O)
-```
-
-this program multiplies the first two inputs and outputs the result (in hex), so here that would be `0xc*0xa=0x78` so it outputs `(78)`.
-
-Check out [examples.c](examples.c) for more examples.
+\*Note that there might be extra space inserted between symbols, because all preprocessors I know of disagree when spaces are inserted between `a` and `b` in `S(a)b` with `#define S(x) x`.
 
 ## Compilers/preprocessors
 
-The fastest preprocessor I know of is the one in [tcc](https://repo.or.cz/w/tinycc.git), so I recommend preprocessing the programs with `tcc -E -P`.
-If you want to get more fine grain information of execution times, then you might want to patch tinycc with [tinycc.diff](tinycc.diff).
-This adds the `__TIMER__` macro, which expands to the executed time and resets the timer, so the second `__TIMER__` in `__TIMER__ FOO __TIMER__` expands to the time it took to expand `FOO`.
-
+The fastest preprocessor I know of is the one in [tcc](https://repo.or.cz/w/tinycc.git).
 For gcc make sure to use the `-ftrack-macro-expansion=0` options and for clang use the `-fmacro-backtrace-limit=1` options.
 If you can't use tcc I recommend using gcc instead of clang, because it's faster, and it gives you incremental output.
 
+If you want to get more fine grain information of execution times, then you might want to patch tinycc with [tinycc.diff](tinycc.diff).
+This adds the `__TIMER__` macro, which expands to the executed time and resets the timer, so the second `__TIMER__` in `__TIMER__ FOO __TIMER__` expands to the time it took to preprocess `FOO`.
 
 
-# Benchmarks of similar projects
+
+# Benchmarks with similar projects
 
 The programs tested are also present in [examples.c](examples.c).
 
@@ -58,8 +94,8 @@ The programs tested are also present in [examples.c](examples.c).
 
 
 # Credit
-Thanks to [notfoundry](https://github.com/notfoundry) and Bacon Headcrab for helping me understand preprocessor meta programming.
-Also, a thanks to [bfi](http://www.kotha.net/bfi//), for the idea of the addition lookup table and a big motivation to further optimize my implementation.
+Thanks to [notfoundry](https://github.com/notfoundry) and Jad Lévesque for helping me understand preprocessor meta programming.
+Also, thanks to [bfi](http://www.kotha.net/bfi//), for the idea of the addition lookup table and a big motivation to further optimize my implementation.
 
 
 ## Licensing
