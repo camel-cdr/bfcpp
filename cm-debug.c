@@ -1,5 +1,5 @@
 
-#define BF_CM_DBG(...) BF_SCAN(BF_EAT BF_LPAREN BF_CM_DBG_UP_0(__VA_ARGS__))
+#define BF_CM_DBG(...) BF_SCAN(BF_SEQ_EAT BF_LPAREN BF_CM_DBG_UP_0(__VA_ARGS__))
 
 #define BF_CM_DBG_UP_0(P,i,tl,t,tr,fs,f,...)  BF_CM_DBG_PASS_UP_1 (BF_CM_DBG_PASS_DN_0 (BF__##f(,P##i,P##tl,P##t,P##tr,P##fs,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#fs,#f,#__VA_ARGS__)XXX
 #define BF_CM_DBG_UP_1(P,i,tl,t,tr,fs,f,...)  BF_CM_DBG_PASS_UP_2 (BF_CM_DBG_PASS_DN_1 (BF__##f(,P##i,P##tl,P##t,P##tr,P##fs,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#fs,#f,#__VA_ARGS__)XXX

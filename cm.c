@@ -1,7 +1,7 @@
 
 #if 0
 
-#define BF_CM(...) BF_SCAN(BF_EAT BF_LPAREN BF_CM_UP_0(__VA_ARGS__))
+#define BF_CM(...) BF_SCAN(BF_SEQ_EAT BF_LPAREN BF_CM_UP_0(__VA_ARGS__))
 
 #define BF_CM_UP_0(P,i,tl,t,tr,fs,f,...)  BF_CM_PASS_UP_1( BF__##f(,P##i,P##tl,P##t,P##tr,P##fs,P##__VA_ARGS__))
 #define BF_CM_UP_1(P,i,tl,t,tr,fs,f,...)  BF_CM_PASS_UP_2( BF__##f(,P##i,P##tl,P##t,P##tr,P##fs,P##__VA_ARGS__))
@@ -44,7 +44,7 @@
 #elif 1
 
 
-#define BF_CM(...) BF_SCAN(BF_EAT BF_LPAREN BF_CM_UP_0(__VA_ARGS__))
+#define BF_CM(...) BF_SCAN(BF_SEQ_EAT BF_LPAREN BF_CM_UP_0(__VA_ARGS__))
 
 #define BF_CM_UP_0(P,i,tl,t,tr,fs,f,...)  BF_CM_PASS_UP_1 (BF_CM_PASS_DN_0 (BF__##f(,P##i,P##tl,P##t,P##tr,P##fs,P##__VA_ARGS__)))
 #define BF_CM_UP_1(P,i,tl,t,tr,fs,f,...)  BF_CM_PASS_UP_2 (BF_CM_PASS_DN_1 (BF__##f(,P##i,P##tl,P##t,P##tr,P##fs,P##__VA_ARGS__)))

@@ -39,7 +39,7 @@
 #define BF_ASCII_21 0,!
 #define BF_ASCII_22 0,\x22
 #define BF_ASCII_23 0,#
-#define BF_ASCII_24 0,$
+#define BF_ASCII_24 0,\x24
 #define BF_ASCII_25 0,%
 #define BF_ASCII_26 0,&
 #define BF_ASCII_27 2,\x27
@@ -277,7 +277,7 @@
 #define BF_FORMAT(seq) BF_CM(,0,,seq(FMT_Q),,,FMT,)
 
 #define BF_EQUAL_FMT_Q_FMT_Q ,1
-#define BF__FMT(P,n,o,i,_1,_2,...) BF_FX(BF_FMT,,P##n,P##o,BF_SPLAT P##i)
+#define BF__FMT(P,n,o,i,_1,_2,...) BF_FX(BF_FMT,,P##n,P##o,BF_SEQ_SPLAT P##i)
 
 #define BF_FMT0(P,n,o,ni,i0,i) (,P##ni,BF_ASCII_APPEND##ni##n(,P##i0,P##o),P##i,,,FMT,)
 #define BF_FMT1(P,n,o,...) )P##o

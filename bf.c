@@ -1,5 +1,3 @@
-#define BF_CAT(a,b) a##b
-#define BF_PCAT(a,b) BF_CAT(a,b)
 
 // If BF_TEST is defined then BF_ASSERT(a,b) macros
 // are expanded. These form a valid C program that can be compiled
@@ -17,22 +15,20 @@ int main(void) {
 #define BF_ASSERT(a,b)
 #endif
 
-
+#define BF_CAT(a,b) a##b
+#define BF_PCAT(a,b) BF_CAT(a,b)
 #define BF_SCAN(...) __VA_ARGS__
-#define BF_PSCAN(P,...) P##__VA_ARGS__
-#define BF_EAT(...)
+#define BF_NOSCAN(P,...) P##__VA_ARGS__
+#define BF_SEQ_EAT(...)
 #define BF_FX(f,...) f(__VA_ARGS__)
-#define BF_SPLIT(...) (__VA_ARGS__),
-#define BF_SPLAT(...) __VA_ARGS__,
 #define BF_LPAREN (
-#define BF_RPAREN (
-#define BF_EMPTY()
+
+#define BF_SEQ_SPLAT(...) __VA_ARGS__,
 
 #define BF_TUPLE_EAT2(a,b,...) __VA_ARGS__
 #define BF_TUPLE_AT_1(x,...) x
-#define BF_PTUPLE_AT_1(...) BF_TUPLE_AT_1(__VA_ARGS__)
 
-#define BF_SEQ_AT_1(P,x) BF_SEQ_AT_1a(BF_SPLAT P##x)
+#define BF_SEQ_AT_1(P,x) BF_SEQ_AT_1a(BF_SEQ_SPLAT P##x)
 #define BF_SEQ_AT_1a(x) BF_TUPLE_AT_1(x)
 BF_ASSERT(BF_SEQ_AT_1(,(1)(2)(3)), 1)
 
@@ -63,7 +59,6 @@ BF_ASSERT(BF_IS_EMPTY(,X), 0)
 #include "math.c"
 #include "cm.c"
 #include "cm-debug.c"
-#include "format.c"
 
 // BF((input1,input2,...),instruction1,instruction2,...)
 // executes the Brainfuck instructions with the specified input.
@@ -105,15 +100,15 @@ BF_ASSERT(BF_IS_EMPTY(,X), 0)
 BF_ASSERT(BF_LPAREN BF__Q(,i,tl,t,tr,fs,(X)), ( ))
 
 // increment tape head
-#define BF__I(P,i,tl,t,tr,fs,...) (,P##i,P##tl,BF_INC(P##t),P##tr,P##fs,BF_SPLAT P##__VA_ARGS__)
+#define BF__I(P,i,tl,t,tr,fs,...) (,P##i,P##tl,BF_INC(P##t),P##tr,P##fs,BF_SEQ_SPLAT P##__VA_ARGS__)
 BF_ASSERT(BF__I(,i,tl,2,tr,fs,(a)(b)), (,i,tl,3,tr,fs,a,(b)))
 
 // decrement tape head
-#define BF__D(P,i,tl,t,tr,fs,...) (,P##i,P##tl,BF_DEC(P##t),P##tr,P##fs,BF_SPLAT P##__VA_ARGS__)
+#define BF__D(P,i,tl,t,tr,fs,...) (,P##i,P##tl,BF_DEC(P##t),P##tr,P##fs,BF_SEQ_SPLAT P##__VA_ARGS__)
 BF_ASSERT(BF__D(,i,tl,2,tr,fs,(a)(b)), (,i,tl,1,tr,fs,a,(b)))
 
 // reads from the input into the tape head
-#define BF__G(P,i,tl,t,tr,fs,...) (,BF_EAT P##i,P##tl,BF_SEQ_AT_1(,P##i),P##tr,P##fs,BF_SPLAT P##__VA_ARGS__)
+#define BF__G(P,i,tl,t,tr,fs,...) (,BF_SEQ_EAT P##i,P##tl,BF_SEQ_AT_1(,P##i),P##tr,P##fs,BF_SEQ_SPLAT P##__VA_ARGS__)
 BF_ASSERT(BF__G(,(3)(4),tl,1,tr,fs,(a)(b)), (,(4),tl,3,tr,fs,a,(b)))
 
 
@@ -122,11 +117,11 @@ BF_ASSERT(BF__G(,(3)(4),tl,1,tr,fs,(a)(b)), (,(4),tl,3,tr,fs,a,(b)))
 // Any output of the form (_(...)) isn't converted to ASCII and directly output.
 
 // outputs tape head, this is later converted to ASCII
-#define BF__A(P,i,tl,t,tr,fs,...) (,P##i,P##tl,P##t,P##tr,P##fs,BF_SPLAT P##__VA_ARGS__)(P##t)
+#define BF__A(P,i,tl,t,tr,fs,...) (,P##i,P##tl,P##t,P##tr,P##fs,BF_SEQ_SPLAT P##__VA_ARGS__)(P##t)
 BF_ASSERT(BF__A(,i,tl,80,tr,fs,(a)(b)), (,i,tl,80,tr,fs,a,(b))(80))
 
 // outputs current tape head
-#define BF__O(P,i,tl,t,tr,fs,...) (,P##i,P##tl,P##t,P##tr,P##fs,BF_SPLAT P##__VA_ARGS__)(_(P##t))
+#define BF__O(P,i,tl,t,tr,fs,...) (,P##i,P##tl,P##t,P##tr,P##fs,BF_SEQ_SPLAT P##__VA_ARGS__)(_(P##t))
 BF_ASSERT(BF__O(,i,tl,t,tr,fs,(a)(b)), (,i,tl,t,tr,fs,a,(b))(_(t)))
 
 // Outputs the current state, this is for debugging purposes and only works when
@@ -135,14 +130,14 @@ BF_ASSERT(BF__O(,i,tl,t,tr,fs,(a)(b)), (,i,tl,t,tr,fs,a,(b))(_(t)))
 // so it's in the correct order and newlines are inserted appropriately.
 // This should also be used if BF_DEBUG is defined, as this will essentially
 // execute S after every executed instruction.
-#define BF__S(P,i,tl,t,tr,fs,...) (,P##i,P##tl,P##t,P##tr,P##fs,BF_SPLAT P##__VA_ARGS__)(,#i,#tl,#t,#tr,#fs,S,#__VA_ARGS__)XXX
+#define BF__S(P,i,tl,t,tr,fs,...) (,P##i,P##tl,P##t,P##tr,P##fs,BF_SEQ_SPLAT P##__VA_ARGS__)(,#i,#tl,#t,#tr,#fs,S,#__VA_ARGS__)XXX
 
 
 
 
 // Eats the first element from a tape stack, without removing the terminating (_)
-#define BF_TAPE_EAT(x) BF_PCAT(BF_TAPE_EAT,BF_CHECK(BF_TAPE_CHECK_##x))
 #define BF_TAPE_CHECK__ ,1
+#define BF_TAPE_EAT(x) BF_PCAT(BF_TAPE_EAT,BF_CHECK(BF_TAPE_CHECK_##x))
 #define BF_TAPE_EAT0
 #define BF_TAPE_EAT1 (_)
 BF_ASSERT(BF_TAPE_EAT(2)(1)(_) BF_TAPE_EAT(1)(_) BF_TAPE_EAT(_), (1)(_) (_) (_))
@@ -150,17 +145,17 @@ BF_ASSERT(BF_TAPE_EAT(2)(1)(_) BF_TAPE_EAT(1)(_) BF_TAPE_EAT(_), (1)(_) (_) (_))
 
 // Returns the first element from a tape stack.
 // If the tape is (_), it will output 0.
-#define BF_TAPE_FST(P,x) BF_FX(BF_TAPE_FST_1a,BF_SPLAT P##x)
-#define BF_TAPE_FST_1a(x,seq) BF_PCAT(BF_TAPE_FST,BF_CHECK(BF_TAPE_CHECK_##x))(x)
-#define BF_TAPE_FST0(x) x
-#define BF_TAPE_FST1(x) 0
-BF_ASSERT(BF_TAPE_FST(,(2)(1)(_)),2)
-BF_ASSERT(BF_TAPE_FST(,(1)(_)),1)
-BF_ASSERT(BF_TAPE_FST(,(_)),0)
+#define BF_TAPE_AT_1(P,x) BF_FX(BF_TAPE_AT_1_1a,BF_SEQ_SPLAT P##x)
+#define BF_TAPE_AT_1_1a(x,seq) BF_PCAT(BF_TAPE_AT_1_,BF_CHECK(BF_TAPE_CHECK_##x))(x)
+#define BF_TAPE_AT_1_0(x) x
+#define BF_TAPE_AT_1_1(x) 0
+BF_ASSERT(BF_TAPE_AT_1(,(2)(1)(_)),2)
+BF_ASSERT(BF_TAPE_AT_1(,(1)(_)),1)
+BF_ASSERT(BF_TAPE_AT_1(,(_)),0)
 
 // shifts the tape left/right
-#define BF__L(P,i,tl,t,tr,fs,...) (,P##i,BF_TAPE_EAT P##tl,BF_TAPE_FST(,P##tl),(P##t)P##tr,P##fs,BF_SPLAT P##__VA_ARGS__)
-#define BF__R(P,i,tl,t,tr,fs,...) (,P##i,(P##t)P##tl,BF_TAPE_FST(,P##tr),BF_TAPE_EAT P##tr,P##fs,BF_SPLAT P##__VA_ARGS__)
+#define BF__L(P,i,tl,t,tr,fs,...) (,P##i,BF_TAPE_EAT P##tl,BF_TAPE_AT_1(,P##tl),(P##t)P##tr,P##fs,BF_SEQ_SPLAT P##__VA_ARGS__)
+#define BF__R(P,i,tl,t,tr,fs,...) (,P##i,(P##t)P##tl,BF_TAPE_AT_1(,P##tr),BF_TAPE_EAT P##tr,P##fs,BF_SEQ_SPLAT P##__VA_ARGS__)
 BF_ASSERT(BF__L(,i,(1)(_),2,(3)(_),fs,(a)(b)), (,i,(_),1,(2)(3)(_),fs,a,(b)))
 BF_ASSERT(BF__R(,i,(1)(_),2,(3)(_),fs,(a)(b)), (,i,(2)(1)(_),3,(_),fs,a,(b)))
 BF_ASSERT(BF__L(,i,(_),1,(2)(3)(_),fs,(a)(b)), (,i,(_),0,(1)(2)(3)(_),fs,a,(b)))
@@ -172,11 +167,11 @@ BF_ASSERT(BF__R(,i,(2)(1)(_),3,(_),fs,(a)(b)), (,i,(3)(2)(1)(_),0,(_),fs,a,(b)))
 #define BF__B(P,i,tl,t,tr,...) (,P##i,P##tl,P##t,P##tr,BF_PCAT(BF_B,BF_IS_0(P##t))(,P##__VA_ARGS__))
 
 // If the tape head is zero, skip to the closing `]` (E).
-#define BF_B1(P,fs,...) P##fs,BF_SCAN(BF_SPLAT BF_EAT P##__VA_ARGS__)
+#define BF_B1(P,fs,...) P##fs,BF_SCAN(BF_SEQ_SPLAT BF_SEQ_EAT P##__VA_ARGS__)
 BF_ASSERT(BF__B(,i,tl,0,tr,fs,((a)(b)(c))(d)(e)), (,i,tl,0,tr,fs,d,(e)))
 
 // If the tape head is not zero, push the continuation and execute the next loop body.
-#define BF_B0(P,fs,...) (BF_SEQ_AT_1(,P##__VA_ARGS__))P##fs,BF_SCAN(BF_SPLAT BF_SCAN P##__VA_ARGS__)
+#define BF_B0(P,fs,...) (BF_SEQ_AT_1(,P##__VA_ARGS__))P##fs,BF_SCAN(BF_SEQ_SPLAT BF_SCAN P##__VA_ARGS__)
 BF_ASSERT(BF__B(,i,tl,t,tr,fs,((a)(b)(c))(d)(e)), (,i,tl,t,tr,((a)(b)(c))fs,a,(b)(c)(d)(e)))
 
 
@@ -185,11 +180,11 @@ BF_ASSERT(BF__B(,i,tl,t,tr,fs,((a)(b)(c))(d)(e)), (,i,tl,t,tr,((a)(b)(c))fs,a,(b
 #define BF__E(P,i,tl,t,tr,fs,...) (,P##i,P##tl,P##t,P##tr,BF_PCAT(BF_E,BF_IS_0(P##t))(,P##fs,P##__VA_ARGS__))
 
 // If the tape head is zero, remove the loop from the function stack and continue execution.
-#define BF_E1(P,fs,...) BF_EAT P##fs,BF_SPLAT P##__VA_ARGS__
+#define BF_E1(P,fs,...) BF_SEQ_EAT P##fs,BF_SEQ_SPLAT P##__VA_ARGS__
 BF_ASSERT(BF__E(,i,tl,0,tr,((a)(b))fs,(c)(d)), (,i,tl,0,tr,fs,c,(d)))
 
 // If the tape isn't zero, execute the loop body from the top of the function stack.
-#define BF_E0(P,fs,...) P##fs,BF_SCAN(BF_SPLAT BF_PTUPLE_AT_1(BF_SPLAT P##fs))P##__VA_ARGS__
+#define BF_E0(P,fs,...) P##fs,BF_SCAN(BF_SEQ_SPLAT BF_FX(BF_TUPLE_AT_1,BF_SEQ_SPLAT P##fs))P##__VA_ARGS__
 BF_ASSERT(BF__E(,i,tl,1,tr,((a)(b))fs,(c)(d)), (,i,tl,1,tr,((a)(b))fs,a,(b)(c)(d)))
 
 
@@ -221,12 +216,10 @@ BF_ASSERT(BF__E(,i,tl,1,tr,((a)(b))fs,(c)(d)), (,i,tl,1,tr,((a)(b))fs,a,(b)(c)(d
 // B: push output to fs
 #define BF_TO_CODE010(P,x,o,fs,...) (,,(P##o(P##x))P##fs,P##__VA_ARGS__)
 // E: pop from fs to the output and parenthesize the old output
-#define BF_TO_CODE001(P,x,o,fs,...) (,BF_SEQ_AT_1(,P##fs)(P##o(P##x)),BF_EAT P##fs,P##__VA_ARGS__)
+#define BF_TO_CODE001(P,x,o,fs,...) (,BF_SEQ_AT_1(,P##fs)(P##o(P##x)),BF_SEQ_EAT P##fs,P##__VA_ARGS__)
 
 BF_ASSERT(BF_TO_CODE(1,2,3,B,4,5,B,6,7,E,B,8,9,E,10,E),
           (1)(2)(3)(B)((4)(5)(B)((6)(7)(E))(B)((8)(9)(E))(10)(E)))
-
-
 
 
 
@@ -251,7 +244,7 @@ BF_ASSERT(BF_SUM_SWITCH(x), SUM_DEFAULT)
 #define BF_SUM_EXPAND1(x)
 #define BF_SUM_EXPAND(x) BF_PCAT(BF_SUM_EXPAND,BF_IS_0(x))(x)
 
-#define BF__SUM_DEFAULT(P,o,x,_1,_2,_3,f1,f2,...) (,(,BF_PSCAN P##o,BF_SUM_EXPAND(P##x)P##f1),0,,,,BF_SUM_SWITCH(P##f2),P##f2,P##__VA_ARGS__)
+#define BF__SUM_DEFAULT(P,o,x,_1,_2,_3,f1,f2,...) (,(,BF_NOSCAN P##o,BF_SUM_EXPAND(P##x)P##f1),0,,,,BF_SUM_SWITCH(P##f2),P##f2,P##__VA_ARGS__)
 BF_ASSERT(BF__SUM_DEFAULT(,(,A),0,,,,X,Y,Z), (,(,A,X),0,,,,SUM_DEFAULT,Y,Z))
 BF_ASSERT(BF__SUM_DEFAULT(,(,A),4,,,,X,Y,Z), (,(,A,_i,4,X),0,,,,SUM_DEFAULT,Y,Z))
 
@@ -264,10 +257,11 @@ BF_ASSERT(BF__SUM_D(,(,),5,,,,D,X,Z), (,(,),4,,,,SUM_DEFAULT,X,Z))
 #define BF__SUM_Q(P,o,x,_2,_3,_4,f,...) )P##o
 BF_ASSERT((BF_SUM(I,I,D,X,Y,Z,D,D,D,Q)), (_i,1,X,Y,Z,_i,fd,Q))
 
-#define BF___i(P,i,tl,t,tr,fs,...) (,P##i,P##tl,BF_PCAT(BF_ADD_,BF_SEQ_AT_1(,P##__VA_ARGS__))(P##t),P##tr,P##fs,BF_SCAN(BF_SPLAT BF_EAT P##__VA_ARGS__))
+#define BF___i(P,i,tl,t,tr,fs,...) (,P##i,P##tl,BF_PCAT(BF_ADD_,BF_SEQ_AT_1(,P##__VA_ARGS__))(P##t),P##tr,P##fs,BF_SCAN(BF_SEQ_SPLAT BF_SEQ_EAT P##__VA_ARGS__))
 BF_ASSERT(BF___i(,i,tl,2,tr,fs,(7)(a)(b)), (,i,tl,9,tr,fs,a,(b)))
 
 #endif
+
 
 
 
@@ -281,64 +275,107 @@ BF_ASSERT(BF___i(,i,tl,2,tr,fs,(7)(a)(b)), (,i,tl,9,tr,fs,a,(b)))
 #else
 #define BF_MERGE(...) BF_SCAN(BF_TUPLE_EAT2 BF_CM(,(,),,,,,MERGE0,__VA_ARGS__,,,,,))
 
-#define BF_MERGE1(P,o,a1,...)               (,(,BF_PSCAN P##o,P##a1)                                         ,,,,,BF_PCAT(MERGE,BF_IS_EMPTY(,P##a1)),P##__VA_ARGS__)
-#define BF_MERGE12(P,o,a1,a2,...)           (,(,BF_PSCAN P##o,BF_PTUPLE_AT_1(BF_MERGE_12_##a1##a2))          ,,,,,MERGE0,P##__VA_ARGS__)
-#define BF_MERGE13(P,o,a1,a2,a3,...)        (,(,BF_PSCAN P##o,BF_PTUPLE_AT_1(BF_MERGE_13_##a1##a3))          ,,,,,MERGE0,P##__VA_ARGS__)
-#define BF_MERGE13_2(P,o,a1,a2,a3,...)      (,(,BF_PSCAN P##o,BF_PTUPLE_AT_1(BF_MERGE_13_##a1##a3))          ,,,,,MERGE0,P##a2,P##__VA_ARGS__)
-#define BF_MERGE123(P,o,a1,a2,a3,...)       (,(,BF_PSCAN P##o,BF_PTUPLE_AT_1(BF_MERGE_123_##a1##a2##a3))     ,,,,,MERGE0,P##__VA_ARGS__)
-#define BF_MERGE124(P,o,a1,a2,a3,a4,...)    (,(,BF_PSCAN P##o,BF_PTUPLE_AT_1(BF_MERGE_124_##a1##a2##a4))     ,,,,,MERGE0,P##__VA_ARGS__)
-#define BF_MERGE124_3(P,o,a1,a2,a3,a4,...)  (,(,BF_PSCAN P##o,BF_PTUPLE_AT_1(BF_MERGE_124_##a1##a2##a4))     ,,,,,MERGE0,P##a3,P##__VA_ARGS__)
+#define BF_MERGE1(P,o,a1,...)               (,(,BF_NOSCAN P##o,P##a1)                                              ,,,,,BF_PCAT(MERGE,BF_IS_EMPTY(,P##a1)),P##__VA_ARGS__)
+#define BF_MERGE12(P,o,a1,a2,...)           (,(,BF_NOSCAN P##o,BF_FX(BF_TUPLE_AT_1,BF_MERGE_12_##a1##a2))          ,,,,,MERGE0,P##__VA_ARGS__)
+#define BF_MERGE13(P,o,a1,a2,a3,...)        (,(,BF_NOSCAN P##o,BF_FX(BF_TUPLE_AT_1,BF_MERGE_13_##a1##a3))          ,,,,,MERGE0,P##__VA_ARGS__)
+#define BF_MERGE13_2(P,o,a1,a2,a3,...)      (,(,BF_NOSCAN P##o,BF_FX(BF_TUPLE_AT_1,BF_MERGE_13_##a1##a3))          ,,,,,MERGE0,P##a2,P##__VA_ARGS__)
+#define BF_MERGE123(P,o,a1,a2,a3,...)       (,(,BF_NOSCAN P##o,BF_FX(BF_TUPLE_AT_1,BF_MERGE_123_##a1##a2##a3))     ,,,,,MERGE0,P##__VA_ARGS__)
+#define BF_MERGE124(P,o,a1,a2,a3,a4,...)    (,(,BF_NOSCAN P##o,BF_FX(BF_TUPLE_AT_1,BF_MERGE_124_##a1##a2##a4))     ,,,,,MERGE0,P##__VA_ARGS__)
+#define BF_MERGE124_3(P,o,a1,a2,a3,a4,...)  (,(,BF_NOSCAN P##o,BF_FX(BF_TUPLE_AT_1,BF_MERGE_124_##a1##a2##a4))     ,,,,,MERGE0,P##a3,P##__VA_ARGS__)
+#define BF_MERGE124_3(P,o,a1,a2,a3,a4,...)  (,(,BF_NOSCAN P##o,BF_FX(BF_TUPLE_AT_1,BF_MERGE_124_##a1##a2##a4))     ,,,,,MERGE0,P##a3,P##__VA_ARGS__)
+#define BF_MERGE1234(P,o,a1,a2,a3,a4,...)   (,(,BF_NOSCAN P##o,BF_FX(BF_TUPLE_AT_1,BF_MERGE_1234_##a1##a2##a3##a4)),,,,,MERGE0,P##__VA_ARGS__)
 
 #define BF__MERGE1(P,o,...) )P##o
-#define BF__MERGE0(P,o,_1,_2,_3,_4,...) BF_PCAT(BF_MERGE,BF_MERGE_DO124(,P##__VA_ARGS__))(,P##o,P##__VA_ARGS__)
+
+#define BF_MERGE0_CAT(a,b) a##b
+#define BF_MERGE0(x) BF_MERGE0_CAT(BF_MERGE,x)
+#define BF__MERGE0(P,o,_1,_2,_3,_4,...) BF_MERGE0(BF_MERGE_DO1234_0(,P##__VA_ARGS__))(,P##o,P##__VA_ARGS__)
 
 
 #define BF_MERGE_DO1_0 1
 #define BF_MERGE_DO1_1 12
-#define BF_MERGE_DO12_0(P,a1,a2) BF_PCAT(BF_MERGE_DO1_,BF_CHECK(BF_MERGE_12_##a1##a2))
+#define BF_MERGE_DO1_CAT(a,b) a##b
+#define BF_MERGE_DO1(x) BF_MERGE_DO1_CAT(BF_MERGE_DO1_,x)
+#define BF_MERGE_DO12_0(P,a1,a2) BF_MERGE_DO1(BF_CHECK(BF_MERGE_12_##a1##a2))
+
 #define BF_MERGE_DO12_1(...) 13
 #define BF_MERGE_DO12_2(...) 13_2
-#define BF_MERGE_DO13_0(P,a1,a2,a3) BF_PCAT(BF_MERGE_DO12_,BF_CHECK(BF_MERGE_13_##a1##a3))(,P##a1,P##a2)
+#define BF_MERGE_DO12_CAT(a,b) a##b
+#define BF_MERGE_DO12(x) BF_MERGE_DO12_CAT(BF_MERGE_DO12_,x)
+#define BF_MERGE_DO13_0(P,a1,a2,a3) BF_MERGE_DO12(BF_CHECK(BF_MERGE_13_##a1##a3))(,P##a1,P##a2)
+
 #define BF_MERGE_DO13_1(...) 123
-#define BF_MERGE_DO123_0(P,a1,a2,a3) BF_PCAT(BF_MERGE_DO13_,BF_CHECK(BF_MERGE_123_##a1##a2##a3))(,P##a1,P##a2,P##a3)
+#define BF_MERGE_DO13_CAT(a,b) a##b
+#define BF_MERGE_DO13(x) BF_MERGE_DO13_CAT(BF_MERGE_DO13_,x)
+#define BF_MERGE_DO123_0(P,a1,a2,a3) BF_MERGE_DO13(BF_CHECK(BF_MERGE_123_##a1##a2##a3))(,P##a1,P##a2,P##a3)
+
 #define BF_MERGE_DO123_1(...) 124
 #define BF_MERGE_DO123_3(...) 124_3
-#define BF_MERGE_DO124(P,a1,a2,a3,a4,...) BF_PCAT(BF_MERGE_DO123_,BF_CHECK(BF_MERGE_124_##a1##a2##a4))(,P##a1,P##a2,P##a3)
+#define BF_MERGE_DO123_CAT(a,b) a##b
+#define BF_MERGE_DO123(x) BF_MERGE_DO123_CAT(BF_MERGE_DO123_,x)
+#define BF_MERGE_DO124_0(P,a1,a2,a3,a4) BF_MERGE_DO123(BF_CHECK(BF_MERGE_124_##a1##a2##a4))(,P##a1,P##a2,P##a3)
+
+#define BF_MERGE_DO124_1(...) 1234
+#define BF_MERGE_DO124_CAT(a,b) a##b
+#define BF_MERGE_DO124(x) BF_MERGE_DO124_CAT(BF_MERGE_DO124_,x)
+#define BF_MERGE_DO1234_0(P,a1,a2,a3,a4,...) BF_MERGE_DO124(BF_CHECK(BF_MERGE_1234_##a1##a2##a3##a4))(,P##a1,P##a2,P##a3,P##a4)
 
 
 #define BF_MERGE_12_L_i _Li,1
 #define BF_MERGE_12_R_i _Ri,1
-#define BF___Li(P,i,tl,t,tr,fs,...) (,P##i,BF_TAPE_EAT P##tl,BF_PCAT(BF_ADD_,BF_SEQ_AT_1(,P##__VA_ARGS__)(BF_TAPE_FST(,P##tl))),(P##t)P##tr,P##fs,BF_SCAN(BF_SPLAT BF_EAT P##__VA_ARGS__))
-#define BF___Ri(P,i,tl,t,tr,fs,...) (,P##i,(P##t)P##tl,BF_PCAT(BF_ADD_,BF_SEQ_AT_1(,P##__VA_ARGS__)(BF_TAPE_FST(,P##tr))),BF_TAPE_EAT P##tr,P##fs,BF_SCAN(BF_SPLAT BF_EAT P##__VA_ARGS__))
+#define BF___Li(P,i,tl,t,tr,fs,...) (,P##i,BF_TAPE_EAT P##tl,BF_PCAT(BF_ADD_,BF_SEQ_AT_1(,P##__VA_ARGS__)(BF_TAPE_AT_1(,P##tl))),(P##t)P##tr,P##fs,BF_SCAN(BF_SEQ_SPLAT BF_SEQ_EAT P##__VA_ARGS__))
+#define BF___Ri(P,i,tl,t,tr,fs,...) (,P##i,(P##t)P##tl,BF_PCAT(BF_ADD_,BF_SEQ_AT_1(,P##__VA_ARGS__)(BF_TAPE_AT_1(,P##tr))),BF_TAPE_EAT P##tr,P##fs,BF_SCAN(BF_SEQ_SPLAT BF_SEQ_EAT P##__VA_ARGS__))
 
 #define BF_MERGE_13__iL _iL,2
 #define BF_MERGE_13__iR _iR,2
-#define BF___iL(P,i,tl,t,tr,fs,...) (,P##i,BF_TAPE_EAT P##tl,BF_TAPE_FST(,P##tl),(BF_PCAT(BF_ADD_,BF_SEQ_AT_1(,P##__VA_ARGS__))(P##t))P##tr,P##fs,BF_SCAN(BF_SPLAT BF_EAT P##__VA_ARGS__))
-#define BF___iR(P,i,tl,t,tr,fs,...) (,P##i,(BF_PCAT(BF_ADD_,BF_SEQ_AT_1(,P##__VA_ARGS__))(P##t))P##tl,BF_TAPE_FST(,P##tr),BF_TAPE_EAT P##tr,P##fs,BF_SCAN(BF_SPLAT BF_EAT P##__VA_ARGS__))
+#define BF___iL(P,i,tl,t,tr,fs,...) (,P##i,BF_TAPE_EAT P##tl,BF_TAPE_AT_1(,P##tl),(BF_PCAT(BF_ADD_,BF_SEQ_AT_1(,P##__VA_ARGS__))(P##t))P##tr,P##fs,BF_SCAN(BF_SEQ_SPLAT BF_SEQ_EAT P##__VA_ARGS__))
+#define BF___iR(P,i,tl,t,tr,fs,...) (,P##i,(BF_PCAT(BF_ADD_,BF_SEQ_AT_1(,P##__VA_ARGS__))(P##t))P##tl,BF_TAPE_AT_1(,P##tr),BF_TAPE_EAT P##tr,P##fs,BF_SCAN(BF_SEQ_SPLAT BF_SEQ_EAT P##__VA_ARGS__))
 
 #define BF_MERGE_123_L_i1 LI,1
 #define BF_MERGE_123_L_iff LD,1
 #define BF_MERGE_123_R_i1 RI,1
 #define BF_MERGE_123_R_iff RD,1
-#define BF__LI(P,i,tl,t,tr,fs,...) (,P##i,BF_TAPE_EAT P##tl,BF_PINC(BF_TAPE_FST(,P##tl)),(P##t)P##tr,P##fs,BF_SPLAT P##__VA_ARGS__)
-#define BF__LD(P,i,tl,t,tr,fs,...) (,P##i,BF_TAPE_EAT P##tl,BF_PDEC(BF_TAPE_FST(,P##tl)),(P##t)P##tr,P##fs,BF_SPLAT P##__VA_ARGS__)
-#define BF__RI(P,i,tl,t,tr,fs,...) (,P##i,(P##t)P##tl,BF_PINC(BF_TAPE_FST(,P##tr)),BF_TAPE_EAT P##tr,P##fs,BF_SPLAT P##__VA_ARGS__)
-#define BF__RD(P,i,tl,t,tr,fs,...) (,P##i,(P##t)P##tl,BF_PDEC(BF_TAPE_FST(,P##tr)),BF_TAPE_EAT P##tr,P##fs,BF_SPLAT P##__VA_ARGS__)
+#define BF__LI(P,i,tl,t,tr,fs,...) (,P##i,BF_TAPE_EAT P##tl,BF_PINC(BF_TAPE_AT_1(,P##tl)),(P##t)P##tr,P##fs,BF_SEQ_SPLAT P##__VA_ARGS__)
+#define BF__LD(P,i,tl,t,tr,fs,...) (,P##i,BF_TAPE_EAT P##tl,BF_PDEC(BF_TAPE_AT_1(,P##tl)),(P##t)P##tr,P##fs,BF_SEQ_SPLAT P##__VA_ARGS__)
+#define BF__RI(P,i,tl,t,tr,fs,...) (,P##i,(P##t)P##tl,BF_PINC(BF_TAPE_AT_1(,P##tr)),BF_TAPE_EAT P##tr,P##fs,BF_SEQ_SPLAT P##__VA_ARGS__)
+#define BF__RD(P,i,tl,t,tr,fs,...) (,P##i,(P##t)P##tl,BF_PDEC(BF_TAPE_AT_1(,P##tr)),BF_TAPE_EAT P##tr,P##fs,BF_SEQ_SPLAT P##__VA_ARGS__)
 
 #define BF_MERGE_123__i1L IL,1
 #define BF_MERGE_123__iffL DL,1
 #define BF_MERGE_123__i1R IR,1
 #define BF_MERGE_123__iffR DR,1
-#define BF__IL(P,i,tl,t,tr,fs,...) (,P##i,BF_TAPE_EAT P##tl,BF_TAPE_FST(,P##tl),(BF_INC(P##t))P##tr,P##fs,BF_SPLAT P##__VA_ARGS__)
-#define BF__DL(P,i,tl,t,tr,fs,...) (,P##i,BF_TAPE_EAT P##tl,BF_TAPE_FST(,P##tl),(BF_DEC(P##t))P##tr,P##fs,BF_SPLAT P##__VA_ARGS__)
-#define BF__IR(P,i,tl,t,tr,fs,...) (,P##i,(BF_INC(P##t))P##tl,BF_TAPE_FST(,P##tr),BF_TAPE_EAT P##tr,P##fs,BF_SPLAT P##__VA_ARGS__)
-#define BF__DR(P,i,tl,t,tr,fs,...) (,P##i,(BF_DEC(P##t))P##tl,BF_TAPE_FST(,P##tr),BF_TAPE_EAT P##tr,P##fs,BF_SPLAT P##__VA_ARGS__)
+#define BF__IL(P,i,tl,t,tr,fs,...) (,P##i,BF_TAPE_EAT P##tl,BF_TAPE_AT_1(,P##tl),(BF_INC(P##t))P##tr,P##fs,BF_SEQ_SPLAT P##__VA_ARGS__)
+#define BF__DL(P,i,tl,t,tr,fs,...) (,P##i,BF_TAPE_EAT P##tl,BF_TAPE_AT_1(,P##tl),(BF_DEC(P##t))P##tr,P##fs,BF_SEQ_SPLAT P##__VA_ARGS__)
+#define BF__IR(P,i,tl,t,tr,fs,...) (,P##i,(BF_INC(P##t))P##tl,BF_TAPE_AT_1(,P##tr),BF_TAPE_EAT P##tr,P##fs,BF_SEQ_SPLAT P##__VA_ARGS__)
+#define BF__DR(P,i,tl,t,tr,fs,...) (,P##i,(BF_DEC(P##t))P##tl,BF_TAPE_AT_1(,P##tr),BF_TAPE_EAT P##tr,P##fs,BF_SEQ_SPLAT P##__VA_ARGS__)
 
 #define BF_MERGE_12__i1 I,1
 #define BF_MERGE_12__iff D,1
 
 #define BF_MERGE_124_B_iE _0,1
-#define BF___0(P,i,tl,t,tr,fs,...) (,P##i,P##tl,0,P##tr,P##fs,BF_SPLAT P##__VA_ARGS__)
+#define BF___0(P,i,tl,t,tr,fs,...) (,P##i,P##tl,0,P##tr,P##fs,BF_SEQ_SPLAT P##__VA_ARGS__)
+
+
+#define BF_TAPE_L(P,tl,t,tr) BF_TAPE_EAT P##tl,BF_TAPE_AT_1(,P##tl),(P##t)P##tr
+#define BF_TAPE_R(P,tl,t,tr) (P##t)P##tl,BF_TAPE_AT_1(,P##tr),BF_TAPE_EAT P##tr
+#define BF_TAPE_FX2(f,...) f(__VA_ARGS__)
+#define BF_TAPE_L2(P,tl,t,tr) BF_TAPE_FX2(BF_TAPE_L,,BF_TAPE_L(,P##tl,P##t,P##tr))
+#define BF_TAPE_R2(P,tl,t,tr) BF_TAPE_FX2(BF_TAPE_R,,BF_TAPE_R(,P##tl,P##t,P##tr))
+#define BF_TAPE_FX3(f,...) f(__VA_ARGS__)
+
+#define BF_MERGE_12_LL L2,1
+#define BF_MERGE_12_RR R2,1
+#define BF_MERGE_123_LLL L3,1
+#define BF_MERGE_123_RRR R3,1
+#define BF_MERGE_1234_LLLL L4,1
+#define BF_MERGE_1234_RRRR R4,1
+#define BF__L2(P,i,tl,t,tr,fs,...) (,P##i,BF_TAPE_FX2(BF_TAPE_L,,BF_TAPE_L(,P##tl,P##t,P##tr)),P##fs,BF_SEQ_SPLAT P##__VA_ARGS__)
+#define BF__R2(P,i,tl,t,tr,fs,...) (,P##i,BF_TAPE_FX2(BF_TAPE_R,,BF_TAPE_R(,P##tl,P##t,P##tr)),P##fs,BF_SEQ_SPLAT P##__VA_ARGS__)
+#define BF__L3(P,i,tl,t,tr,fs,...) (,P##i,BF_TAPE_FX3(BF_TAPE_L,,BF_TAPE_L2(,P##tl,P##t,P##tr)),P##fs,BF_SEQ_SPLAT P##__VA_ARGS__)
+#define BF__R3(P,i,tl,t,tr,fs,...) (,P##i,BF_TAPE_FX3(BF_TAPE_R,,BF_TAPE_R2(,P##tl,P##t,P##tr)),P##fs,BF_SEQ_SPLAT P##__VA_ARGS__)
+#define BF__L4(P,i,tl,t,tr,fs,...) (,P##i,BF_TAPE_FX3(BF_TAPE_L2,,BF_TAPE_L2(,P##tl,P##t,P##tr)),P##fs,BF_SEQ_SPLAT P##__VA_ARGS__)
+#define BF__R4(P,i,tl,t,tr,fs,...) (,P##i,BF_TAPE_FX3(BF_TAPE_R2,,BF_TAPE_R2(,P##tl,P##t,P##tr)),P##fs,BF_SEQ_SPLAT P##__VA_ARGS__)
+
 
 
 // This uses recursive sequence iteration, whether this
@@ -383,8 +420,8 @@ BF_ASSERT(BF___i(,i,tl,2,tr,fs,(7)(a)(b)), (,i,tl,9,tr,fs,a,(b)))
 #define BF_L0a(tl1,tl0,t,tr) BF_CAT(,tl0)tl1,t,tr
 #define BF_R0a(tr1,tr0,t,tl) tl,t,BF_CAT(,tr0)tr1
 
-#define BF___R0(P,i,tl,t,tr,fs,...) (,P##i,BF_FX(BF_L0a,tl,BF_L0_DO(t,tr)),P##fs,BF_SPLAT P##__VA_ARGS__)
-#define BF___L0(P,i,tl,t,tr,fs,...) (,P##i,BF_FX(BF_R0a,tr,BF_L0_DO(t,tl)),P##fs,BF_SPLAT P##__VA_ARGS__)
+#define BF___R0(P,i,tl,t,tr,fs,...) (,P##i,BF_FX(BF_L0a,tl,BF_L0_DO(t,tr)),P##fs,BF_SEQ_SPLAT P##__VA_ARGS__)
+#define BF___L0(P,i,tl,t,tr,fs,...) (,P##i,BF_FX(BF_R0a,tr,BF_L0_DO(t,tl)),P##fs,BF_SEQ_SPLAT P##__VA_ARGS__)
 
 BF_ASSERT(BF___L0(,,(3)(2)(0)(1)(_),4,(5)(6)(0)(7)(8)(_),,(Q)), (,,(1)(_),0,(2)(3)(4)(5)(6)(0)(7)(8)(_),,Q,))
 BF_ASSERT(BF___R0(,,(3)(2)(0)(1)(_),4,(5)(6)(0)(7)(8)(_),,(Q)), (,,(6)(5)(4)(3)(2)(0)(1)(_),0,(7)(8)(_),,Q,))
@@ -396,14 +433,14 @@ BF_ASSERT(BF___R0(,,(3)(2)(1)(_),4,(5)(6)(7)(8)(_),,(Q)), (,,(8)(7)(6)(5)(4)(3)(
 #endif
 
 
-
+#include "format.c"
 
 
 #ifndef BF_DEBUG
-#define BF(input,...) BF_FORMAT(BF_CM(,BF_TO_CODE input,(0)(_),0,(0)(_),,BF_SCAN(BF_SPLAT BF_TO_CODE(BF_MERGE(BF_SUM(__VA_ARGS__,Q))))))
-#define BF_RAW(input,...) BF_CM(,BF_TO_CODE input,(0)(_),0,(0)(_),,BF_SCAN(BF_SPLAT BF_TO_CODE(BF_MERGE(BF_SUM(__VA_ARGS__,Q)))))
+#define BF(input,...) BF_FORMAT(BF_CM(,BF_TO_CODE input,(_),0,(_),,BF_SCAN(BF_SEQ_SPLAT BF_TO_CODE(BF_MERGE(BF_SUM(__VA_ARGS__,Q))))))
+#define BF_RAW(input,...) BF_CM(,BF_TO_CODE input,(_),0,(_),,BF_SCAN(BF_SEQ_SPLAT BF_TO_CODE(BF_MERGE(BF_SUM(__VA_ARGS__,Q)))))
 #else
-#define BF(input,...) BF_CM_DBG(,BF_TO_CODE input,(0)(_),0,(0)(_),,BF_SCAN(BF_SPLAT BF_TO_CODE(BF_MERGE(BF_SUM(__VA_ARGS__,Q)))))
+#define BF(input,...) BF_CM_DBG(,BF_TO_CODE input,(_),0,(_),,BF_SCAN(BF_SEQ_SPLAT BF_TO_CODE(BF_MERGE(BF_SUM(__VA_ARGS__,Q)))))
 #endif
 
 

@@ -3,7 +3,7 @@
 #ifndef __TIMER__
 #define __TIMER__
 #endif
-BF_FX(BF_EAT,__TIMER__)
+BF_FX(BF_SEQ_EAT,__TIMER__)
 
 
 #if 1
@@ -24,7 +24,7 @@ B,
   D, // decrement cell #1
 E,
 R,R,O
-)
+) __TIMER__
 #endif
 
 

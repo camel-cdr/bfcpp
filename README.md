@@ -67,15 +67,17 @@ Since the preprocessor can't distinguish between the standard Brainfuck symbols,
 
 \*Note that there might be extra space inserted between symbols, because all preprocessors I know of disagree when spaces are inserted in `S(a)b` with `#define S(x) x` and different tokens in `a` and `b`.
 
-## Compilers/preprocessors
+## Preprocessors/Compilers
 
-The fastest preprocessor I know of is the one in [tcc](https://repo.or.cz/w/tinycc.git).
-For gcc make sure to use the `-ftrack-macro-expansion=0` options and for clang use the `-fmacro-backtrace-limit=1` options.
-If you can't use tcc I recommend using gcc instead of clang, because it's faster, and it gives you incremental output.
+* [tcc](https://repo.or.cz/w/tinycc.git): use with `tcc -P -E`. tcc has the fastest preprocessor I know of.
+* gcc: use with `gcc -P -E -ftrack-macro-expansion=0`. If you can't use tcc I recommend using gcc over clang, because it's faster, and gives you incremental output.
+* clang: use with `clang -P -E -fmacro-backtrace-limit=1`.
+* msvc: use with `cl /P /C /Zc:preprocessor`. You need `/Zc:preprocessor`, because otherwise msvc will use a non-standard confirming preprocessor implementation.
+* mcpp: use with `mcpp -P -W0`. `-W0` is required, because the otherwise you'll get the warning "Replacement text ... of macro ... involved subsequent text", which is valid, but mcpp warns about it, because in "normal" code this is probably not indented behavior. There is also currently a [mcpp bug](https://sourceforge.net/p/mcpp/bugs/14/), where the add lookup table segfaults the preprocessor, so you'll need to disable `BF_SUM` for mcpp to preprocess the code.
+
 
 If you want to get more fine grain information of execution times, then you might want to patch tinycc with [tinycc.diff](tinycc.diff).
 This adds the `__TIMER__` macro, which expands to the executed time and resets the timer, so the second `__TIMER__` in `__TIMER__ FOO __TIMER__` expands to the time it took to preprocess `FOO`.
-
 
 
 # Benchmarks with similar projects
@@ -85,14 +87,14 @@ The programs tested are also present in [examples.c](examples.c).
 
 | Program                                                          | bfcpp  | [bfi](http://www.kotha.net/bfi//) | [CPP_COMPLETE](https://github.com/orangeduck/CPP_COMPLETE) | [preprocessor_brainfuck](https://github.com/Ferdi265/preprocessor_brainfuck) |
 | ---                                                              | ---    | ---                               | ---                                                        | ---                                                                          |
-| [Hello World](https://esolangs.org/wiki/Brainfuck)               | 0.038s | 0.048s                            | 23s                                                        | ~20 minutes                                                                  |
-| [insertion sort](http://brainfuck.org/isort.b) 1                 | 0.059s | 0.11s                             | ---                                                        | ---                                                                          |
-| insertion sort 2                                                 | 0.11s  | 0.22s                             | ---                                                        | ---                                                                          |
-| insertion sort 3                                                 | 0.85s  | 1.7s                              | ---                                                        | ---                                                                          |
-| insertion sort 4                                                 | 2.5s   | 5.1s                              | ---                                                        | ---                                                                          |
-| [sierpinski triangle](http://brainfuck.org/sierpinski.b)         | 5.9s   | 6.6s                              | ---                                                        | ---                                                                          |
-| [square numbers from 0 to 10000](http://brainfuck.org/squares.b) | 13.28s | 11.45s                            | ---                                                        | ---                                                                          |
-| [quine](http://brainfuck.org/392quine.b)                         | 30.9s  | 283.3s                            | ---                                                        | ---                                                                          |
+| [Hello World](https://esolangs.org/wiki/Brainfuck)               | 0.020s | 0.048s                            | 23s                                                        | ~20 minutes                                                                  |
+| [insertion sort](http://brainfuck.org/isort.b) 1                 | 0.049s | 0.11s                             | ---                                                        | ---                                                                          |
+| insertion sort 2                                                 | 0.09s  | 0.22s                             | ---                                                        | ---                                                                          |
+| insertion sort 3                                                 | 0.75s  | 1.7s                              | ---                                                        | ---                                                                          |
+| insertion sort 4                                                 | 2.15s   | 5.1s                              | ---                                                        | ---                                                                          |
+| [sierpinski triangle](http://brainfuck.org/sierpinski.b)         | 5.60s   | 6.6s                              | ---                                                        | ---                                                                          |
+| [square numbers from 0 to 10000](http://brainfuck.org/squares.b) | 11.49s | 11.45s                            | ---                                                        | ---                                                                          |
+| [quine](http://brainfuck.org/392quine.b)                         | 32.22s  | 283.3s                            | ---                                                        | ---                                                                          |
 
 
 
