@@ -70,13 +70,13 @@ Since the preprocessor can't distinguish between the standard Brainfuck symbols,
 ## Preprocessors/Compilers
 
 * [tcc](https://repo.or.cz/w/tinycc.git): use with `tcc -P -E`. tcc has the fastest preprocessor I know of.
-* gcc: use with `gcc -P -E -ftrack-macro-expansion=0`. If you can't use tcc I recommend using gcc over clang, because it's faster, and gives you incremental output.
-* clang: use with `clang -P -E -fmacro-backtrace-limit=1`.
+* [gcc](https://gcc.gnu.org/): use with `gcc -P -E -ftrack-macro-expansion=0`. If you can't use tcc I recommend using gcc over clang, because it's faster, and gives you incremental output.
+* [clang](https://clang.llvm.org/): use with `clang -P -E -fmacro-backtrace-limit=1`.
 * msvc: use with `cl /P /C /Zc:preprocessor`. You need `/Zc:preprocessor`, because otherwise msvc will use a non-standard confirming preprocessor implementation.
-* mcpp: use with `mcpp -P -W0`. `-W0` is required, because the otherwise you'll get the warning "Replacement text ... of macro ... involved subsequent text", which is valid, but mcpp warns about it, because in "normal" code this is probably not indented behavior. There is also currently a [mcpp bug](https://sourceforge.net/p/mcpp/bugs/14/), where the add lookup table segfaults the preprocessor, so you'll need to disable `BF_SUM` for mcpp to preprocess the code.
+* [mcpp](https://sourceforge.net/p/mcpp/): use with `mcpp -P -W0`. `-W0` is required, because the otherwise you'll get the warning "Replacement text ... of macro ... involved subsequent text", which is valid, but mcpp warns about it, because in "normal" code this is probably not indented behavior. There is also currently a [mcpp bug](https://sourceforge.net/p/mcpp/bugs/14/), where the add lookup table segfaults the preprocessor, so you'll need to disable `BF_SUM` for mcpp to preprocess the code.
 
 
-If you want to get more fine grain information of execution times, then you might want to patch tinycc with [tinycc.diff](tinycc.diff).
+If you want to get more fine grain information of execution times, then you might want to patch tcc with [tinycc.diff](tinycc.diff).
 This adds the `__TIMER__` macro, which expands to the executed time and resets the timer, so the second `__TIMER__` in `__TIMER__ FOO __TIMER__` expands to the time it took to preprocess `FOO`.
 
 
