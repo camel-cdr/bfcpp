@@ -1,4 +1,4 @@
-# Let's write an optimizing Brainfuck interpreter in the Preprocessor
+# Let's write an optimizing Brainfuck interpreter using only the C Preprocessor
 
 ## Overview
 
