@@ -30,6 +30,29 @@
 
 ## 1 Introduction
 
+The goal of this article is to implement an optimizing brainfuck interpreter using only the C preprocessor.
+The final code can be used as follows:
+
+<table><tr><td><b>Hello World</b></td><td><b>Output (cpp main.c)</b></td></tr><tr><td>
+
+```c
+#include "bf.c"
+
+BF(,I,I,I,I,I,I,I,I,B,R,I,I,I,I,B,R,I,I,R,I,I,
+    I,R,I,I,I,R,I,L,L,L,L,D,E,R,I,R,I,R,D,R,R,
+    I,B,L,E,L,D,E,R,R,A,R,D,D,D,A,I,I,I,I,I,I,
+    I,A,A,I,I,I,A,R,R,A,L,D,A,L,A,I,I,I,A,D,D,
+    D,D,D,D,A,D,D,D,D,D,D,D,D,A,R,R,I,A,R,I,I,A)
+```
+
+</td><td>
+
+```
+Hello\x20World!\n
+```
+
+</td></tr></table>
+
 I won't explain macro expansion in detail here, but you should read through [Paul Mensonides amazing write-up](https://marc.info/?l=boost&m=118835769257658&w=2) on the macro expansion process.
 If you aren't certain how something expands, you might also want to check out [ppstep](https://github.com/notfoundry/ppstep), which visualizes every step of macro expansion.
 
