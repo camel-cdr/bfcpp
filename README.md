@@ -14,11 +14,11 @@ A C99 confirming\* optimizing Brainfuck implementation written (and executed) on
 ```c
 #include "bf.c"
 
-BF((),I,I,I,I,I,I,I,I,B,R,I,I,I,I,B,R,I,I,R,I,I,
-      I,R,I,I,I,R,I,L,L,L,L,D,E,R,I,R,I,R,D,R,R,
-      I,B,L,E,L,D,E,R,R,A,R,D,D,D,A,I,I,I,I,I,I,
-      I,A,A,I,I,I,A,R,R,A,L,D,A,L,A,I,I,I,A,D,D,
-      D,D,D,D,A,D,D,D,D,D,D,D,D,A,R,R,I,A,R,I,I,A)
+BF(,I,I,I,I,I,I,I,I,B,R,I,I,I,I,B,R,I,I,R,I,I,
+    I,R,I,I,I,R,I,L,L,L,L,D,E,R,I,R,I,R,D,R,R,
+    I,B,L,E,L,D,E,R,R,A,R,D,D,D,A,I,I,I,I,I,I,
+    I,A,A,I,I,I,A,R,R,A,L,D,A,L,A,I,I,I,A,D,D,
+    D,D,D,D,A,D,D,D,D,D,D,D,D,A,R,R,I,A,R,I,I,A)
 ```
 
 </td><td>
@@ -80,7 +80,7 @@ If you want to get more fine grain information of execution times, then you migh
 This adds the `__TIMER__` macro, which expands to the executed time and resets the timer, so the second `__TIMER__` in `__TIMER__ FOO __TIMER__` expands to the time it took to preprocess `FOO`.
 
 
-# Benchmarks with similar projects
+## Benchmarks with similar projects
 
 The programs tested are also present in [examples.c](examples.c).
 

@@ -274,13 +274,3 @@
 #define BF_ASCII_APPEND20(P,a,b) BF_FMT_SCAN(P##a)P##b
 
 
-#define BF_FORMAT(seq) BF_CM(,0,,seq(FMT_Q),,,FMT,)
-
-#define BF_EQUAL_FMT_Q_FMT_Q ,1
-#define BF__FMT(P,n,o,i,_1,_2,...) BF_FX(BF_FMT,,P##n,P##o,BF_SEQ_SPLAT P##i)
-
-#define BF_FMT0(P,n,o,ni,i0,i) (,P##ni,BF_ASCII_APPEND##ni##n(,P##i0,P##o),P##i,,,FMT,)
-#define BF_FMT1(P,n,o,...) )P##o
-#define BF_FMT(P,n,o,i0,i) BF_PCAT(BF_FMT,BF_EQUAL(FMT_Q,P##i0)(,P##n,P##o,BF_ASCII(P##i0),P##i))
-
-

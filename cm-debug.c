@@ -1,71 +1,71 @@
 
 #define BF_CM_DBG(...) BF_SCAN(BF_SEQ_EAT BF_LPAREN BF_CM_DBG_UP_0(__VA_ARGS__))
 
-#define BF_CM_DBG_UP_0(P,i,tl,t,tr,fs,f,...)  BF_CM_DBG_PASS_UP_1 (BF_CM_DBG_PASS_DN_0 (BF__##f(,P##i,P##tl,P##t,P##tr,P##fs,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#fs,#f,#__VA_ARGS__)XXX
-#define BF_CM_DBG_UP_1(P,i,tl,t,tr,fs,f,...)  BF_CM_DBG_PASS_UP_2 (BF_CM_DBG_PASS_DN_1 (BF__##f(,P##i,P##tl,P##t,P##tr,P##fs,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#fs,#f,#__VA_ARGS__)XXX
-#define BF_CM_DBG_UP_2(P,i,tl,t,tr,fs,f,...)  BF_CM_DBG_PASS_UP_3 (BF_CM_DBG_PASS_DN_2 (BF__##f(,P##i,P##tl,P##t,P##tr,P##fs,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#fs,#f,#__VA_ARGS__)XXX
-#define BF_CM_DBG_UP_3(P,i,tl,t,tr,fs,f,...)  BF_CM_DBG_PASS_UP_4 (BF_CM_DBG_PASS_DN_3 (BF__##f(,P##i,P##tl,P##t,P##tr,P##fs,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#fs,#f,#__VA_ARGS__)XXX
-#define BF_CM_DBG_UP_4(P,i,tl,t,tr,fs,f,...)  BF_CM_DBG_PASS_UP_5 (BF_CM_DBG_PASS_DN_4 (BF__##f(,P##i,P##tl,P##t,P##tr,P##fs,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#fs,#f,#__VA_ARGS__)XXX
-#define BF_CM_DBG_UP_5(P,i,tl,t,tr,fs,f,...)  BF_CM_DBG_PASS_UP_6 (BF_CM_DBG_PASS_DN_5 (BF__##f(,P##i,P##tl,P##t,P##tr,P##fs,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#fs,#f,#__VA_ARGS__)XXX
-#define BF_CM_DBG_UP_6(P,i,tl,t,tr,fs,f,...)  BF_CM_DBG_PASS_UP_7 (BF_CM_DBG_PASS_DN_6 (BF__##f(,P##i,P##tl,P##t,P##tr,P##fs,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#fs,#f,#__VA_ARGS__)XXX
-#define BF_CM_DBG_UP_7(P,i,tl,t,tr,fs,f,...)  BF_CM_DBG_PASS_UP_8 (BF_CM_DBG_PASS_DN_7 (BF__##f(,P##i,P##tl,P##t,P##tr,P##fs,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#fs,#f,#__VA_ARGS__)XXX
-#define BF_CM_DBG_UP_8(P,i,tl,t,tr,fs,f,...)  BF_CM_DBG_PASS_UP_9 (BF_CM_DBG_PASS_DN_8 (BF__##f(,P##i,P##tl,P##t,P##tr,P##fs,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#fs,#f,#__VA_ARGS__)XXX
-#define BF_CM_DBG_UP_9(P,i,tl,t,tr,fs,f,...)  BF_CM_DBG_PASS_UP_10(BF_CM_DBG_PASS_DN_9 (BF__##f(,P##i,P##tl,P##t,P##tr,P##fs,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#fs,#f,#__VA_ARGS__)XXX
-#define BF_CM_DBG_UP_10(P,i,tl,t,tr,fs,f,...) BF_CM_DBG_PASS_UP_11(BF_CM_DBG_PASS_DN_10(BF__##f(,P##i,P##tl,P##t,P##tr,P##fs,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#fs,#f,#__VA_ARGS__)XXX
-#define BF_CM_DBG_UP_11(P,i,tl,t,tr,fs,f,...) BF_CM_DBG_PASS_UP_12(BF_CM_DBG_PASS_DN_11(BF__##f(,P##i,P##tl,P##t,P##tr,P##fs,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#fs,#f,#__VA_ARGS__)XXX
-#define BF_CM_DBG_UP_12(P,i,tl,t,tr,fs,f,...) BF_CM_DBG_PASS_UP_13(BF_CM_DBG_PASS_DN_12(BF__##f(,P##i,P##tl,P##t,P##tr,P##fs,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#fs,#f,#__VA_ARGS__)XXX
-#define BF_CM_DBG_UP_13(P,i,tl,t,tr,fs,f,...) BF_CM_DBG_PASS_UP_14(BF_CM_DBG_PASS_DN_13(BF__##f(,P##i,P##tl,P##t,P##tr,P##fs,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#fs,#f,#__VA_ARGS__)XXX
-#define BF_CM_DBG_UP_14(P,i,tl,t,tr,fs,f,...) BF_CM_DBG_PASS_UP_15(BF_CM_DBG_PASS_DN_14(BF__##f(,P##i,P##tl,P##t,P##tr,P##fs,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#fs,#f,#__VA_ARGS__)XXX
-#define BF_CM_DBG_UP_15(P,i,tl,t,tr,fs,f,...) BF_CM_DBG_PASS_UP_16(BF_CM_DBG_PASS_DN_15(BF__##f(,P##i,P##tl,P##t,P##tr,P##fs,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#fs,#f,#__VA_ARGS__)XXX
-#define BF_CM_DBG_UP_16(P,i,tl,t,tr,fs,f,...) BF_CM_DBG_PASS_UP_17(BF_CM_DBG_PASS_DN_16(BF__##f(,P##i,P##tl,P##t,P##tr,P##fs,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#fs,#f,#__VA_ARGS__)XXX
-#define BF_CM_DBG_UP_17(P,i,tl,t,tr,fs,f,...) BF_CM_DBG_PASS_UP_18(BF_CM_DBG_PASS_DN_17(BF__##f(,P##i,P##tl,P##t,P##tr,P##fs,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#fs,#f,#__VA_ARGS__)XXX
-#define BF_CM_DBG_UP_18(P,i,tl,t,tr,fs,f,...) BF_CM_DBG_PASS_UP_19(BF_CM_DBG_PASS_DN_18(BF__##f(,P##i,P##tl,P##t,P##tr,P##fs,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#fs,#f,#__VA_ARGS__)XXX
-#define BF_CM_DBG_UP_19(P,i,tl,t,tr,fs,f,...) BF_CM_DBG_PASS_UP_20(BF_CM_DBG_PASS_DN_19(BF__##f(,P##i,P##tl,P##t,P##tr,P##fs,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#fs,#f,#__VA_ARGS__)XXX
-#define BF_CM_DBG_UP_20(P,i,tl,t,tr,fs,f,...) BF_CM_DBG_PASS_UP_21(BF_CM_DBG_PASS_DN_20(BF__##f(,P##i,P##tl,P##t,P##tr,P##fs,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#fs,#f,#__VA_ARGS__)XXX
-#define BF_CM_DBG_UP_21(P,i,tl,t,tr,fs,f,...) BF_CM_DBG_PASS_UP_22(BF_CM_DBG_PASS_DN_21(BF__##f(,P##i,P##tl,P##t,P##tr,P##fs,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#fs,#f,#__VA_ARGS__)XXX
-#define BF_CM_DBG_UP_22(P,i,tl,t,tr,fs,f,...) BF_CM_DBG_PASS_UP_23(BF_CM_DBG_PASS_DN_22(BF__##f(,P##i,P##tl,P##t,P##tr,P##fs,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#fs,#f,#__VA_ARGS__)XXX
-#define BF_CM_DBG_UP_23(P,i,tl,t,tr,fs,f,...) BF_CM_DBG_PASS_UP_24(BF_CM_DBG_PASS_DN_23(BF__##f(,P##i,P##tl,P##t,P##tr,P##fs,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#fs,#f,#__VA_ARGS__)XXX
-#define BF_CM_DBG_UP_24(P,i,tl,t,tr,fs,f,...) BF_CM_DBG_PASS_UP_25(BF_CM_DBG_PASS_DN_24(BF__##f(,P##i,P##tl,P##t,P##tr,P##fs,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#fs,#f,#__VA_ARGS__)XXX
-#define BF_CM_DBG_UP_25(P,i,tl,t,tr,fs,f,...) BF_CM_DBG_PASS_UP_26(BF_CM_DBG_PASS_DN_25(BF__##f(,P##i,P##tl,P##t,P##tr,P##fs,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#fs,#f,#__VA_ARGS__)XXX
-#define BF_CM_DBG_UP_26(P,i,tl,t,tr,fs,f,...) BF_CM_DBG_PASS_UP_27(BF_CM_DBG_PASS_DN_26(BF__##f(,P##i,P##tl,P##t,P##tr,P##fs,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#fs,#f,#__VA_ARGS__)XXX
-#define BF_CM_DBG_UP_27(P,i,tl,t,tr,fs,f,...) BF_CM_DBG_PASS_UP_28(BF_CM_DBG_PASS_DN_27(BF__##f(,P##i,P##tl,P##t,P##tr,P##fs,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#fs,#f,#__VA_ARGS__)XXX
-#define BF_CM_DBG_UP_28(P,i,tl,t,tr,fs,f,...) BF_CM_DBG_PASS_UP_29(BF_CM_DBG_PASS_DN_28(BF__##f(,P##i,P##tl,P##t,P##tr,P##fs,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#fs,#f,#__VA_ARGS__)XXX
-#define BF_CM_DBG_UP_29(P,i,tl,t,tr,fs,f,...) BF_CM_DBG_PASS_UP_30(BF_CM_DBG_PASS_DN_29(BF__##f(,P##i,P##tl,P##t,P##tr,P##fs,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#fs,#f,#__VA_ARGS__)XXX
-#define BF_CM_DBG_UP_30(P,i,tl,t,tr,fs,f,...) BF_CM_DBG_PASS_UP_31(BF_CM_DBG_PASS_DN_30(BF__##f(,P##i,P##tl,P##t,P##tr,P##fs,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#fs,#f,#__VA_ARGS__)XXX
-#define BF_CM_DBG_UP_31(P,i,tl,t,tr,fs,f,...) BF_CM_DBG_PASS_UP_32(BF_CM_DBG_PASS_DN_31(BF__##f(,P##i,P##tl,P##t,P##tr,P##fs,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#fs,#f,#__VA_ARGS__)XXX
+#define BF_CM_DBG_UP_0(P,i,tl,t,tr,is,f,...)  BF_CM_DBG_PASS_UP_1 (BF_CM_DBG_PASS_DN_0 (BF__##f(,P##i,P##tl,P##t,P##tr,P##is,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#is,#f,#__VA_ARGS__)XXX
+#define BF_CM_DBG_UP_1(P,i,tl,t,tr,is,f,...)  BF_CM_DBG_PASS_UP_2 (BF_CM_DBG_PASS_DN_1 (BF__##f(,P##i,P##tl,P##t,P##tr,P##is,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#is,#f,#__VA_ARGS__)XXX
+#define BF_CM_DBG_UP_2(P,i,tl,t,tr,is,f,...)  BF_CM_DBG_PASS_UP_3 (BF_CM_DBG_PASS_DN_2 (BF__##f(,P##i,P##tl,P##t,P##tr,P##is,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#is,#f,#__VA_ARGS__)XXX
+#define BF_CM_DBG_UP_3(P,i,tl,t,tr,is,f,...)  BF_CM_DBG_PASS_UP_4 (BF_CM_DBG_PASS_DN_3 (BF__##f(,P##i,P##tl,P##t,P##tr,P##is,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#is,#f,#__VA_ARGS__)XXX
+#define BF_CM_DBG_UP_4(P,i,tl,t,tr,is,f,...)  BF_CM_DBG_PASS_UP_5 (BF_CM_DBG_PASS_DN_4 (BF__##f(,P##i,P##tl,P##t,P##tr,P##is,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#is,#f,#__VA_ARGS__)XXX
+#define BF_CM_DBG_UP_5(P,i,tl,t,tr,is,f,...)  BF_CM_DBG_PASS_UP_6 (BF_CM_DBG_PASS_DN_5 (BF__##f(,P##i,P##tl,P##t,P##tr,P##is,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#is,#f,#__VA_ARGS__)XXX
+#define BF_CM_DBG_UP_6(P,i,tl,t,tr,is,f,...)  BF_CM_DBG_PASS_UP_7 (BF_CM_DBG_PASS_DN_6 (BF__##f(,P##i,P##tl,P##t,P##tr,P##is,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#is,#f,#__VA_ARGS__)XXX
+#define BF_CM_DBG_UP_7(P,i,tl,t,tr,is,f,...)  BF_CM_DBG_PASS_UP_8 (BF_CM_DBG_PASS_DN_7 (BF__##f(,P##i,P##tl,P##t,P##tr,P##is,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#is,#f,#__VA_ARGS__)XXX
+#define BF_CM_DBG_UP_8(P,i,tl,t,tr,is,f,...)  BF_CM_DBG_PASS_UP_9 (BF_CM_DBG_PASS_DN_8 (BF__##f(,P##i,P##tl,P##t,P##tr,P##is,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#is,#f,#__VA_ARGS__)XXX
+#define BF_CM_DBG_UP_9(P,i,tl,t,tr,is,f,...)  BF_CM_DBG_PASS_UP_10(BF_CM_DBG_PASS_DN_9 (BF__##f(,P##i,P##tl,P##t,P##tr,P##is,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#is,#f,#__VA_ARGS__)XXX
+#define BF_CM_DBG_UP_10(P,i,tl,t,tr,is,f,...) BF_CM_DBG_PASS_UP_11(BF_CM_DBG_PASS_DN_10(BF__##f(,P##i,P##tl,P##t,P##tr,P##is,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#is,#f,#__VA_ARGS__)XXX
+#define BF_CM_DBG_UP_11(P,i,tl,t,tr,is,f,...) BF_CM_DBG_PASS_UP_12(BF_CM_DBG_PASS_DN_11(BF__##f(,P##i,P##tl,P##t,P##tr,P##is,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#is,#f,#__VA_ARGS__)XXX
+#define BF_CM_DBG_UP_12(P,i,tl,t,tr,is,f,...) BF_CM_DBG_PASS_UP_13(BF_CM_DBG_PASS_DN_12(BF__##f(,P##i,P##tl,P##t,P##tr,P##is,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#is,#f,#__VA_ARGS__)XXX
+#define BF_CM_DBG_UP_13(P,i,tl,t,tr,is,f,...) BF_CM_DBG_PASS_UP_14(BF_CM_DBG_PASS_DN_13(BF__##f(,P##i,P##tl,P##t,P##tr,P##is,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#is,#f,#__VA_ARGS__)XXX
+#define BF_CM_DBG_UP_14(P,i,tl,t,tr,is,f,...) BF_CM_DBG_PASS_UP_15(BF_CM_DBG_PASS_DN_14(BF__##f(,P##i,P##tl,P##t,P##tr,P##is,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#is,#f,#__VA_ARGS__)XXX
+#define BF_CM_DBG_UP_15(P,i,tl,t,tr,is,f,...) BF_CM_DBG_PASS_UP_16(BF_CM_DBG_PASS_DN_15(BF__##f(,P##i,P##tl,P##t,P##tr,P##is,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#is,#f,#__VA_ARGS__)XXX
+#define BF_CM_DBG_UP_16(P,i,tl,t,tr,is,f,...) BF_CM_DBG_PASS_UP_17(BF_CM_DBG_PASS_DN_16(BF__##f(,P##i,P##tl,P##t,P##tr,P##is,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#is,#f,#__VA_ARGS__)XXX
+#define BF_CM_DBG_UP_17(P,i,tl,t,tr,is,f,...) BF_CM_DBG_PASS_UP_18(BF_CM_DBG_PASS_DN_17(BF__##f(,P##i,P##tl,P##t,P##tr,P##is,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#is,#f,#__VA_ARGS__)XXX
+#define BF_CM_DBG_UP_18(P,i,tl,t,tr,is,f,...) BF_CM_DBG_PASS_UP_19(BF_CM_DBG_PASS_DN_18(BF__##f(,P##i,P##tl,P##t,P##tr,P##is,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#is,#f,#__VA_ARGS__)XXX
+#define BF_CM_DBG_UP_19(P,i,tl,t,tr,is,f,...) BF_CM_DBG_PASS_UP_20(BF_CM_DBG_PASS_DN_19(BF__##f(,P##i,P##tl,P##t,P##tr,P##is,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#is,#f,#__VA_ARGS__)XXX
+#define BF_CM_DBG_UP_20(P,i,tl,t,tr,is,f,...) BF_CM_DBG_PASS_UP_21(BF_CM_DBG_PASS_DN_20(BF__##f(,P##i,P##tl,P##t,P##tr,P##is,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#is,#f,#__VA_ARGS__)XXX
+#define BF_CM_DBG_UP_21(P,i,tl,t,tr,is,f,...) BF_CM_DBG_PASS_UP_22(BF_CM_DBG_PASS_DN_21(BF__##f(,P##i,P##tl,P##t,P##tr,P##is,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#is,#f,#__VA_ARGS__)XXX
+#define BF_CM_DBG_UP_22(P,i,tl,t,tr,is,f,...) BF_CM_DBG_PASS_UP_23(BF_CM_DBG_PASS_DN_22(BF__##f(,P##i,P##tl,P##t,P##tr,P##is,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#is,#f,#__VA_ARGS__)XXX
+#define BF_CM_DBG_UP_23(P,i,tl,t,tr,is,f,...) BF_CM_DBG_PASS_UP_24(BF_CM_DBG_PASS_DN_23(BF__##f(,P##i,P##tl,P##t,P##tr,P##is,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#is,#f,#__VA_ARGS__)XXX
+#define BF_CM_DBG_UP_24(P,i,tl,t,tr,is,f,...) BF_CM_DBG_PASS_UP_25(BF_CM_DBG_PASS_DN_24(BF__##f(,P##i,P##tl,P##t,P##tr,P##is,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#is,#f,#__VA_ARGS__)XXX
+#define BF_CM_DBG_UP_25(P,i,tl,t,tr,is,f,...) BF_CM_DBG_PASS_UP_26(BF_CM_DBG_PASS_DN_25(BF__##f(,P##i,P##tl,P##t,P##tr,P##is,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#is,#f,#__VA_ARGS__)XXX
+#define BF_CM_DBG_UP_26(P,i,tl,t,tr,is,f,...) BF_CM_DBG_PASS_UP_27(BF_CM_DBG_PASS_DN_26(BF__##f(,P##i,P##tl,P##t,P##tr,P##is,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#is,#f,#__VA_ARGS__)XXX
+#define BF_CM_DBG_UP_27(P,i,tl,t,tr,is,f,...) BF_CM_DBG_PASS_UP_28(BF_CM_DBG_PASS_DN_27(BF__##f(,P##i,P##tl,P##t,P##tr,P##is,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#is,#f,#__VA_ARGS__)XXX
+#define BF_CM_DBG_UP_28(P,i,tl,t,tr,is,f,...) BF_CM_DBG_PASS_UP_29(BF_CM_DBG_PASS_DN_28(BF__##f(,P##i,P##tl,P##t,P##tr,P##is,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#is,#f,#__VA_ARGS__)XXX
+#define BF_CM_DBG_UP_29(P,i,tl,t,tr,is,f,...) BF_CM_DBG_PASS_UP_30(BF_CM_DBG_PASS_DN_29(BF__##f(,P##i,P##tl,P##t,P##tr,P##is,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#is,#f,#__VA_ARGS__)XXX
+#define BF_CM_DBG_UP_30(P,i,tl,t,tr,is,f,...) BF_CM_DBG_PASS_UP_31(BF_CM_DBG_PASS_DN_30(BF__##f(,P##i,P##tl,P##t,P##tr,P##is,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#is,#f,#__VA_ARGS__)XXX
+#define BF_CM_DBG_UP_31(P,i,tl,t,tr,is,f,...) BF_CM_DBG_PASS_UP_32(BF_CM_DBG_PASS_DN_31(BF__##f(,P##i,P##tl,P##t,P##tr,P##is,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#is,#f,#__VA_ARGS__)XXX
 
-#define BF_CM_DBG_DN_0(P,i,tl,t,tr,fs,f,...)                                            BF__##f(,P##i,P##tl,P##t,P##tr,P##fs,P##__VA_ARGS__  )(,#i,#tl,#t,#tr,#fs,#f,#__VA_ARGS__)XXX
-#define BF_CM_DBG_DN_1(P,i,tl,t,tr,fs,f,...)  BF_CM_DBG_PASS_DN_0 (BF_CM_DBG_PASS_DN_0 (BF__##f(,P##i,P##tl,P##t,P##tr,P##fs,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#fs,#f,#__VA_ARGS__)XXX
-#define BF_CM_DBG_DN_2(P,i,tl,t,tr,fs,f,...)  BF_CM_DBG_PASS_DN_1 (BF_CM_DBG_PASS_DN_1 (BF__##f(,P##i,P##tl,P##t,P##tr,P##fs,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#fs,#f,#__VA_ARGS__)XXX
-#define BF_CM_DBG_DN_3(P,i,tl,t,tr,fs,f,...)  BF_CM_DBG_PASS_DN_2 (BF_CM_DBG_PASS_DN_2 (BF__##f(,P##i,P##tl,P##t,P##tr,P##fs,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#fs,#f,#__VA_ARGS__)XXX
-#define BF_CM_DBG_DN_4(P,i,tl,t,tr,fs,f,...)  BF_CM_DBG_PASS_DN_3 (BF_CM_DBG_PASS_DN_3 (BF__##f(,P##i,P##tl,P##t,P##tr,P##fs,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#fs,#f,#__VA_ARGS__)XXX
-#define BF_CM_DBG_DN_5(P,i,tl,t,tr,fs,f,...)  BF_CM_DBG_PASS_DN_4 (BF_CM_DBG_PASS_DN_4 (BF__##f(,P##i,P##tl,P##t,P##tr,P##fs,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#fs,#f,#__VA_ARGS__)XXX
-#define BF_CM_DBG_DN_6(P,i,tl,t,tr,fs,f,...)  BF_CM_DBG_PASS_DN_5 (BF_CM_DBG_PASS_DN_5 (BF__##f(,P##i,P##tl,P##t,P##tr,P##fs,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#fs,#f,#__VA_ARGS__)XXX
-#define BF_CM_DBG_DN_7(P,i,tl,t,tr,fs,f,...)  BF_CM_DBG_PASS_DN_6 (BF_CM_DBG_PASS_DN_6 (BF__##f(,P##i,P##tl,P##t,P##tr,P##fs,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#fs,#f,#__VA_ARGS__)XXX
-#define BF_CM_DBG_DN_8(P,i,tl,t,tr,fs,f,...)  BF_CM_DBG_PASS_DN_7 (BF_CM_DBG_PASS_DN_7 (BF__##f(,P##i,P##tl,P##t,P##tr,P##fs,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#fs,#f,#__VA_ARGS__)XXX
-#define BF_CM_DBG_DN_9(P,i,tl,t,tr,fs,f,...)  BF_CM_DBG_PASS_DN_8 (BF_CM_DBG_PASS_DN_8 (BF__##f(,P##i,P##tl,P##t,P##tr,P##fs,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#fs,#f,#__VA_ARGS__)XXX
-#define BF_CM_DBG_DN_10(P,i,tl,t,tr,fs,f,...) BF_CM_DBG_PASS_DN_9 (BF_CM_DBG_PASS_DN_9 (BF__##f(,P##i,P##tl,P##t,P##tr,P##fs,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#fs,#f,#__VA_ARGS__)XXX
-#define BF_CM_DBG_DN_11(P,i,tl,t,tr,fs,f,...) BF_CM_DBG_PASS_DN_10(BF_CM_DBG_PASS_DN_10(BF__##f(,P##i,P##tl,P##t,P##tr,P##fs,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#fs,#f,#__VA_ARGS__)XXX
-#define BF_CM_DBG_DN_12(P,i,tl,t,tr,fs,f,...) BF_CM_DBG_PASS_DN_11(BF_CM_DBG_PASS_DN_11(BF__##f(,P##i,P##tl,P##t,P##tr,P##fs,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#fs,#f,#__VA_ARGS__)XXX
-#define BF_CM_DBG_DN_13(P,i,tl,t,tr,fs,f,...) BF_CM_DBG_PASS_DN_12(BF_CM_DBG_PASS_DN_12(BF__##f(,P##i,P##tl,P##t,P##tr,P##fs,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#fs,#f,#__VA_ARGS__)XXX
-#define BF_CM_DBG_DN_14(P,i,tl,t,tr,fs,f,...) BF_CM_DBG_PASS_DN_13(BF_CM_DBG_PASS_DN_13(BF__##f(,P##i,P##tl,P##t,P##tr,P##fs,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#fs,#f,#__VA_ARGS__)XXX
-#define BF_CM_DBG_DN_15(P,i,tl,t,tr,fs,f,...) BF_CM_DBG_PASS_DN_14(BF_CM_DBG_PASS_DN_14(BF__##f(,P##i,P##tl,P##t,P##tr,P##fs,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#fs,#f,#__VA_ARGS__)XXX
-#define BF_CM_DBG_DN_16(P,i,tl,t,tr,fs,f,...) BF_CM_DBG_PASS_DN_15(BF_CM_DBG_PASS_DN_15(BF__##f(,P##i,P##tl,P##t,P##tr,P##fs,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#fs,#f,#__VA_ARGS__)XXX
-#define BF_CM_DBG_DN_17(P,i,tl,t,tr,fs,f,...) BF_CM_DBG_PASS_DN_16(BF_CM_DBG_PASS_DN_16(BF__##f(,P##i,P##tl,P##t,P##tr,P##fs,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#fs,#f,#__VA_ARGS__)XXX
-#define BF_CM_DBG_DN_18(P,i,tl,t,tr,fs,f,...) BF_CM_DBG_PASS_DN_17(BF_CM_DBG_PASS_DN_17(BF__##f(,P##i,P##tl,P##t,P##tr,P##fs,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#fs,#f,#__VA_ARGS__)XXX
-#define BF_CM_DBG_DN_19(P,i,tl,t,tr,fs,f,...) BF_CM_DBG_PASS_DN_18(BF_CM_DBG_PASS_DN_18(BF__##f(,P##i,P##tl,P##t,P##tr,P##fs,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#fs,#f,#__VA_ARGS__)XXX
-#define BF_CM_DBG_DN_20(P,i,tl,t,tr,fs,f,...) BF_CM_DBG_PASS_DN_19(BF_CM_DBG_PASS_DN_19(BF__##f(,P##i,P##tl,P##t,P##tr,P##fs,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#fs,#f,#__VA_ARGS__)XXX
-#define BF_CM_DBG_DN_21(P,i,tl,t,tr,fs,f,...) BF_CM_DBG_PASS_DN_20(BF_CM_DBG_PASS_DN_20(BF__##f(,P##i,P##tl,P##t,P##tr,P##fs,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#fs,#f,#__VA_ARGS__)XXX
-#define BF_CM_DBG_DN_22(P,i,tl,t,tr,fs,f,...) BF_CM_DBG_PASS_DN_21(BF_CM_DBG_PASS_DN_21(BF__##f(,P##i,P##tl,P##t,P##tr,P##fs,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#fs,#f,#__VA_ARGS__)XXX
-#define BF_CM_DBG_DN_23(P,i,tl,t,tr,fs,f,...) BF_CM_DBG_PASS_DN_22(BF_CM_DBG_PASS_DN_22(BF__##f(,P##i,P##tl,P##t,P##tr,P##fs,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#fs,#f,#__VA_ARGS__)XXX
-#define BF_CM_DBG_DN_24(P,i,tl,t,tr,fs,f,...) BF_CM_DBG_PASS_DN_23(BF_CM_DBG_PASS_DN_23(BF__##f(,P##i,P##tl,P##t,P##tr,P##fs,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#fs,#f,#__VA_ARGS__)XXX
-#define BF_CM_DBG_DN_25(P,i,tl,t,tr,fs,f,...) BF_CM_DBG_PASS_DN_24(BF_CM_DBG_PASS_DN_24(BF__##f(,P##i,P##tl,P##t,P##tr,P##fs,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#fs,#f,#__VA_ARGS__)XXX
-#define BF_CM_DBG_DN_26(P,i,tl,t,tr,fs,f,...) BF_CM_DBG_PASS_DN_25(BF_CM_DBG_PASS_DN_25(BF__##f(,P##i,P##tl,P##t,P##tr,P##fs,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#fs,#f,#__VA_ARGS__)XXX
-#define BF_CM_DBG_DN_27(P,i,tl,t,tr,fs,f,...) BF_CM_DBG_PASS_DN_26(BF_CM_DBG_PASS_DN_26(BF__##f(,P##i,P##tl,P##t,P##tr,P##fs,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#fs,#f,#__VA_ARGS__)XXX
-#define BF_CM_DBG_DN_28(P,i,tl,t,tr,fs,f,...) BF_CM_DBG_PASS_DN_27(BF_CM_DBG_PASS_DN_27(BF__##f(,P##i,P##tl,P##t,P##tr,P##fs,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#fs,#f,#__VA_ARGS__)XXX
-#define BF_CM_DBG_DN_29(P,i,tl,t,tr,fs,f,...) BF_CM_DBG_PASS_DN_28(BF_CM_DBG_PASS_DN_28(BF__##f(,P##i,P##tl,P##t,P##tr,P##fs,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#fs,#f,#__VA_ARGS__)XXX
-#define BF_CM_DBG_DN_30(P,i,tl,t,tr,fs,f,...) BF_CM_DBG_PASS_DN_29(BF_CM_DBG_PASS_DN_29(BF__##f(,P##i,P##tl,P##t,P##tr,P##fs,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#fs,#f,#__VA_ARGS__)XXX
-#define BF_CM_DBG_DN_31(P,i,tl,t,tr,fs,f,...) BF_CM_DBG_PASS_DN_30(BF_CM_DBG_PASS_DN_30(BF__##f(,P##i,P##tl,P##t,P##tr,P##fs,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#fs,#f,#__VA_ARGS__)XXX
+#define BF_CM_DBG_DN_0(P,i,tl,t,tr,is,f,...)                                            BF__##f(,P##i,P##tl,P##t,P##tr,P##is,P##__VA_ARGS__  )(,#i,#tl,#t,#tr,#is,#f,#__VA_ARGS__)XXX
+#define BF_CM_DBG_DN_1(P,i,tl,t,tr,is,f,...)  BF_CM_DBG_PASS_DN_0 (BF_CM_DBG_PASS_DN_0 (BF__##f(,P##i,P##tl,P##t,P##tr,P##is,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#is,#f,#__VA_ARGS__)XXX
+#define BF_CM_DBG_DN_2(P,i,tl,t,tr,is,f,...)  BF_CM_DBG_PASS_DN_1 (BF_CM_DBG_PASS_DN_1 (BF__##f(,P##i,P##tl,P##t,P##tr,P##is,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#is,#f,#__VA_ARGS__)XXX
+#define BF_CM_DBG_DN_3(P,i,tl,t,tr,is,f,...)  BF_CM_DBG_PASS_DN_2 (BF_CM_DBG_PASS_DN_2 (BF__##f(,P##i,P##tl,P##t,P##tr,P##is,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#is,#f,#__VA_ARGS__)XXX
+#define BF_CM_DBG_DN_4(P,i,tl,t,tr,is,f,...)  BF_CM_DBG_PASS_DN_3 (BF_CM_DBG_PASS_DN_3 (BF__##f(,P##i,P##tl,P##t,P##tr,P##is,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#is,#f,#__VA_ARGS__)XXX
+#define BF_CM_DBG_DN_5(P,i,tl,t,tr,is,f,...)  BF_CM_DBG_PASS_DN_4 (BF_CM_DBG_PASS_DN_4 (BF__##f(,P##i,P##tl,P##t,P##tr,P##is,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#is,#f,#__VA_ARGS__)XXX
+#define BF_CM_DBG_DN_6(P,i,tl,t,tr,is,f,...)  BF_CM_DBG_PASS_DN_5 (BF_CM_DBG_PASS_DN_5 (BF__##f(,P##i,P##tl,P##t,P##tr,P##is,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#is,#f,#__VA_ARGS__)XXX
+#define BF_CM_DBG_DN_7(P,i,tl,t,tr,is,f,...)  BF_CM_DBG_PASS_DN_6 (BF_CM_DBG_PASS_DN_6 (BF__##f(,P##i,P##tl,P##t,P##tr,P##is,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#is,#f,#__VA_ARGS__)XXX
+#define BF_CM_DBG_DN_8(P,i,tl,t,tr,is,f,...)  BF_CM_DBG_PASS_DN_7 (BF_CM_DBG_PASS_DN_7 (BF__##f(,P##i,P##tl,P##t,P##tr,P##is,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#is,#f,#__VA_ARGS__)XXX
+#define BF_CM_DBG_DN_9(P,i,tl,t,tr,is,f,...)  BF_CM_DBG_PASS_DN_8 (BF_CM_DBG_PASS_DN_8 (BF__##f(,P##i,P##tl,P##t,P##tr,P##is,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#is,#f,#__VA_ARGS__)XXX
+#define BF_CM_DBG_DN_10(P,i,tl,t,tr,is,f,...) BF_CM_DBG_PASS_DN_9 (BF_CM_DBG_PASS_DN_9 (BF__##f(,P##i,P##tl,P##t,P##tr,P##is,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#is,#f,#__VA_ARGS__)XXX
+#define BF_CM_DBG_DN_11(P,i,tl,t,tr,is,f,...) BF_CM_DBG_PASS_DN_10(BF_CM_DBG_PASS_DN_10(BF__##f(,P##i,P##tl,P##t,P##tr,P##is,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#is,#f,#__VA_ARGS__)XXX
+#define BF_CM_DBG_DN_12(P,i,tl,t,tr,is,f,...) BF_CM_DBG_PASS_DN_11(BF_CM_DBG_PASS_DN_11(BF__##f(,P##i,P##tl,P##t,P##tr,P##is,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#is,#f,#__VA_ARGS__)XXX
+#define BF_CM_DBG_DN_13(P,i,tl,t,tr,is,f,...) BF_CM_DBG_PASS_DN_12(BF_CM_DBG_PASS_DN_12(BF__##f(,P##i,P##tl,P##t,P##tr,P##is,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#is,#f,#__VA_ARGS__)XXX
+#define BF_CM_DBG_DN_14(P,i,tl,t,tr,is,f,...) BF_CM_DBG_PASS_DN_13(BF_CM_DBG_PASS_DN_13(BF__##f(,P##i,P##tl,P##t,P##tr,P##is,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#is,#f,#__VA_ARGS__)XXX
+#define BF_CM_DBG_DN_15(P,i,tl,t,tr,is,f,...) BF_CM_DBG_PASS_DN_14(BF_CM_DBG_PASS_DN_14(BF__##f(,P##i,P##tl,P##t,P##tr,P##is,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#is,#f,#__VA_ARGS__)XXX
+#define BF_CM_DBG_DN_16(P,i,tl,t,tr,is,f,...) BF_CM_DBG_PASS_DN_15(BF_CM_DBG_PASS_DN_15(BF__##f(,P##i,P##tl,P##t,P##tr,P##is,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#is,#f,#__VA_ARGS__)XXX
+#define BF_CM_DBG_DN_17(P,i,tl,t,tr,is,f,...) BF_CM_DBG_PASS_DN_16(BF_CM_DBG_PASS_DN_16(BF__##f(,P##i,P##tl,P##t,P##tr,P##is,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#is,#f,#__VA_ARGS__)XXX
+#define BF_CM_DBG_DN_18(P,i,tl,t,tr,is,f,...) BF_CM_DBG_PASS_DN_17(BF_CM_DBG_PASS_DN_17(BF__##f(,P##i,P##tl,P##t,P##tr,P##is,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#is,#f,#__VA_ARGS__)XXX
+#define BF_CM_DBG_DN_19(P,i,tl,t,tr,is,f,...) BF_CM_DBG_PASS_DN_18(BF_CM_DBG_PASS_DN_18(BF__##f(,P##i,P##tl,P##t,P##tr,P##is,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#is,#f,#__VA_ARGS__)XXX
+#define BF_CM_DBG_DN_20(P,i,tl,t,tr,is,f,...) BF_CM_DBG_PASS_DN_19(BF_CM_DBG_PASS_DN_19(BF__##f(,P##i,P##tl,P##t,P##tr,P##is,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#is,#f,#__VA_ARGS__)XXX
+#define BF_CM_DBG_DN_21(P,i,tl,t,tr,is,f,...) BF_CM_DBG_PASS_DN_20(BF_CM_DBG_PASS_DN_20(BF__##f(,P##i,P##tl,P##t,P##tr,P##is,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#is,#f,#__VA_ARGS__)XXX
+#define BF_CM_DBG_DN_22(P,i,tl,t,tr,is,f,...) BF_CM_DBG_PASS_DN_21(BF_CM_DBG_PASS_DN_21(BF__##f(,P##i,P##tl,P##t,P##tr,P##is,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#is,#f,#__VA_ARGS__)XXX
+#define BF_CM_DBG_DN_23(P,i,tl,t,tr,is,f,...) BF_CM_DBG_PASS_DN_22(BF_CM_DBG_PASS_DN_22(BF__##f(,P##i,P##tl,P##t,P##tr,P##is,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#is,#f,#__VA_ARGS__)XXX
+#define BF_CM_DBG_DN_24(P,i,tl,t,tr,is,f,...) BF_CM_DBG_PASS_DN_23(BF_CM_DBG_PASS_DN_23(BF__##f(,P##i,P##tl,P##t,P##tr,P##is,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#is,#f,#__VA_ARGS__)XXX
+#define BF_CM_DBG_DN_25(P,i,tl,t,tr,is,f,...) BF_CM_DBG_PASS_DN_24(BF_CM_DBG_PASS_DN_24(BF__##f(,P##i,P##tl,P##t,P##tr,P##is,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#is,#f,#__VA_ARGS__)XXX
+#define BF_CM_DBG_DN_26(P,i,tl,t,tr,is,f,...) BF_CM_DBG_PASS_DN_25(BF_CM_DBG_PASS_DN_25(BF__##f(,P##i,P##tl,P##t,P##tr,P##is,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#is,#f,#__VA_ARGS__)XXX
+#define BF_CM_DBG_DN_27(P,i,tl,t,tr,is,f,...) BF_CM_DBG_PASS_DN_26(BF_CM_DBG_PASS_DN_26(BF__##f(,P##i,P##tl,P##t,P##tr,P##is,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#is,#f,#__VA_ARGS__)XXX
+#define BF_CM_DBG_DN_28(P,i,tl,t,tr,is,f,...) BF_CM_DBG_PASS_DN_27(BF_CM_DBG_PASS_DN_27(BF__##f(,P##i,P##tl,P##t,P##tr,P##is,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#is,#f,#__VA_ARGS__)XXX
+#define BF_CM_DBG_DN_29(P,i,tl,t,tr,is,f,...) BF_CM_DBG_PASS_DN_28(BF_CM_DBG_PASS_DN_28(BF__##f(,P##i,P##tl,P##t,P##tr,P##is,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#is,#f,#__VA_ARGS__)XXX
+#define BF_CM_DBG_DN_30(P,i,tl,t,tr,is,f,...) BF_CM_DBG_PASS_DN_29(BF_CM_DBG_PASS_DN_29(BF__##f(,P##i,P##tl,P##t,P##tr,P##is,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#is,#f,#__VA_ARGS__)XXX
+#define BF_CM_DBG_DN_31(P,i,tl,t,tr,is,f,...) BF_CM_DBG_PASS_DN_30(BF_CM_DBG_PASS_DN_30(BF__##f(,P##i,P##tl,P##t,P##tr,P##is,P##__VA_ARGS__)))(,#i,#tl,#t,#tr,#is,#f,#__VA_ARGS__)XXX
 
 
 #define BF_CM_DBG_PASS_UP_1(x)  BF_CM_DBG_UP_1 x
@@ -99,7 +99,7 @@
 #define BF_CM_DBG_PASS_UP_29(x) BF_CM_DBG_UP_29 x
 #define BF_CM_DBG_PASS_UP_30(x) BF_CM_DBG_UP_30 x
 #define BF_CM_DBG_PASS_UP_31(x) BF_CM_DBG_UP_31 x
-#define BF_CM_DBG_PASS_UP_32(x) BF_CM_DBG_ERROR_NO_MORE_MACHINE_STATES x
+#define BF_CM_DBG_PASS_UP_32(x) BF_CM_DBG_ERROR_NO_MORE_MACHINE_STATE x
 
 #define BF_CM_DBG_PASS_DN_0(x)  BF_CM_DBG_DN_0 x
 #define BF_CM_DBG_PASS_DN_1(x)  BF_CM_DBG_DN_1 x
@@ -134,4 +134,4 @@
 #define BF_CM_DBG_PASS_DN_30(x) BF_CM_DBG_DN_30 x
 #define BF_CM_DBG_PASS_DN_31(x) BF_CM_DBG_DN_31 x
 
-#define BF_CM_DBG_ERROR_NO_MORE_MACHINE_STATES()
+#define BF_CM_DBG_ERROR_NO_MORE_MACHINE_STATE()

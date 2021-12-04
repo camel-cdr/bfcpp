@@ -2,7 +2,7 @@
 #define BF_INC(x) BF_INC_##x
 #define BF_PINC(x) BF_INC(x)
 
-// seq 0 255 |awk '{printf("#define BF_INC_%x %x\n", $1, $1 == 0xFF ? 0 : ($1+1))}'
+// seq 0 255 | awk '{printf("#define BF_INC_%x %x\n", $1, $1 == 0xFF ? 0 : ($1+1))}'
 
 #define BF_INC_0 1
 #define BF_INC_1 2
@@ -265,7 +265,7 @@
 #define BF_DEC(x) BF_DEC_##x
 #define BF_PDEC(x) BF_DEC(x)
 
-// seq 0 255 |awk '{printf("#define BF_DEC_%x %x\n", $1, $1 == 0xFF ? fe : ($1-1))}'
+// seq 0 255 | awk '{printf("#define BF_DEC_%x %x\n", $1, $1 == 0xFF ? fe : ($1-1))}'
 
 #define BF_DEC_0 ff
 #define BF_DEC_1 0
