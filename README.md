@@ -80,6 +80,10 @@ If you want to get more fine grain information of execution times, then you migh
 This adds the `__TIMER__` macro, which expands to the executed time and resets the timer, so the second `__TIMER__` in `__TIMER__ FOO __TIMER__` expands to the time it took to preprocess `FOO`.
 
 
+## How does this work?
+
+Check out the [tutorial](TUTORIAL.md), if you want to learn how I wrote this.
+
 ## Benchmarks with similar projects
 
 The programs tested are also present in [examples.c](examples.c).
