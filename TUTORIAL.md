@@ -1,7 +1,9 @@
 # Let's write an optimizing Brainfuck interpreter using only the C Preprocessor
 
-## Overview
+Note: This isn't fully fleshed out yet, and more of a brain dump I wrote after finishing the project.
 
+
+## Overview
 
 * [1. Introduction](#1-introduction)
 	* [1.1. Example, "better" case statements](#11-example-better-case-statements)
