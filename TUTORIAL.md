@@ -810,7 +810,7 @@ Here is the output of `SCAN(!)SCAN(!)SCAN(!)SCAN(#)SCAN(#)SCAN(#)SCAN($)...` for
 * mcpp: `!  !  !  #  #  #  $  $  $  %  %  %  &  &  &  *  *  *  +  +  +  -  -  -  .  .  .  /  /  /  :  :  :  ;  ;  ;  <  <  <  =  =  =  >  >  >  ?  ?  ?  @  @  @  [  [  [  ]  ]  ]  ^  ^  ^  {  {  {  |  |  |  }  }  }  ~  ~  ~`
 * chibicc: `!!!###$$$%%%&&&***+++---...///:::;;;<<<===>>>???@@@[[[]]]^^^{{{|||}}}~~~`
 
-Sadly I don't know of any better way to concatenate non-identifier tokens.
+Luckily this behavior can be unified by stringizing the output.
 
 To implement this we'll need to know three things a) what hexadecimal number is mapped to which character, b) if this character is an identifier, and c) if this character can be used in C code.
 
@@ -866,7 +866,7 @@ Now we'll define the concatenation rules:
 This can be used in our postprocessing parse `BF_FORMAT`, which also reverses the output:
 
 ```c
-#define BF_FORMAT(seq) BF_CM(,0,,seq(FMT_Q),,,FMT,)
+#define BF_FORMAT(seq) BF_PSTR(BF_CM(,0,,seq(FMT_Q),,,FMT,))
 
 #define BF_EQUAL_FMT_Q_FMT_Q ,1
 #define BF__FMT(P,n,o,i,_1,_2,...) BF_FX(BF_FMT,,P##n,P##o,BF_SEQ_SPLAT P##i)
@@ -973,7 +973,7 @@ This can be used in our postprocessing parse `BF_FORMAT`, which also reverses th
 
 
 
-#define BF_FORMAT(seq) BF_CM(,0,,seq(FMT_Q),,,FMT,)
+#define BF_FORMAT(seq) BF_PSTR(BF_CM(,0,,seq(FMT_Q),,,FMT,))
 
 #define BF_EQUAL_FMT_Q_FMT_Q ,1
 #define BF__FMT(P,n,o,i,_1,_2,...) BF_FX(BF_FMT,,P##n,P##o,BF_SEQ_SPLAT P##i)
@@ -1529,7 +1529,7 @@ This brought down the execution time of the Brainfuck [quine](http://brainfuck.o
 
 
 
-#define BF_FORMAT(seq) BF_CM(,0,,seq(FMT_Q),,,FMT,)
+#define BF_FORMAT(seq) BF_PSTR(BF_CM(,0,,seq(FMT_Q),,,FMT,))
 
 #define BF_EQUAL_FMT_Q_FMT_Q ,1
 #define BF__FMT(P,n,o,i,_1,_2,...) BF_FX(BF_FMT,,P##n,P##o,BF_SEQ_SPLAT P##i)

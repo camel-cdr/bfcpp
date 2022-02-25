@@ -220,7 +220,7 @@ BF_ASSERT(BF_TO_CODE(1,2,3,B,4,5,B,6,7,E,B,8,9,E,10,E),
 
 
 
-#define BF_FORMAT(seq) BF_CM(,0,,seq(FMT_Q),,,FMT,)
+#define BF_FORMAT(seq) BF_PSTR(BF_CM(,0,,seq(FMT_Q),,,FMT,))
 
 #define BF_EQUAL_FMT_Q_FMT_Q ,1
 #define BF__FMT(P,n,o,i,_1,_2,...) BF_FX(BF_FMT,,P##n,P##o,BF_SEQ_SPLAT P##i)
