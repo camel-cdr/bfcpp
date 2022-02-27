@@ -24,7 +24,7 @@ BF(,I,I,I,I,I,I,I,I,B,R,I,I,I,I,B,R,I,I,R,I,I,
 </td><td>
 
 ```
-Hello\x20World!\n
+"Hello\x20World!\n"
 ```
 
 </td></tr></table>
@@ -42,7 +42,7 @@ BF((c,a),G,R,G,L,B,R,B,D,R,I,R,I,L,L,E,R,
 </td><td>
 
 ```
-(78)
+"(78)"
 ```
 
 </td></tr></table>
