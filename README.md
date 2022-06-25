@@ -96,9 +96,9 @@ The programs tested are also present in [examples.c](examples.c).
 | [insertion sort](http://brainfuck.org/isort.b) 2                 | 0.09s  | 0.22s                             | ---                                                        | ---                                                                          |
 | [insertion sort](http://brainfuck.org/isort.b) 3                 | 0.75s  | 1.7s                              | ---                                                        | ---                                                                          |
 | [insertion sort](http://brainfuck.org/isort.b) 4                 | 2.15s  | 5.1s                              | ---                                                        | ---                                                                          |
-| [sierpinski triangle](http://brainfuck.org/sierpinski.b)         | 5.60s  | 6.6s                              | ---                                                        | ---                                                                          |
-| [square numbers from 0 to 10000](http://brainfuck.org/squares.b) | 11.49s | 11.45s                            | ---                                                        | ---                                                                          |
-| [quine](http://brainfuck.org/392quine.b)                         | 32.22s | 283.3s                            | ---                                                        | ---                                                                          |
+| [sierpinski triangle](http://brainfuck.org/sierpinski.b)         | 5.32s  | 6.6s                              | ---                                                        | ---                                                                          |
+| [square numbers from 0 to 10000](http://brainfuck.org/squares.b) | 10.90s | 11.45s                            | ---                                                        | ---                                                                          |
+| [quine](http://brainfuck.org/392quine.b)                         | 29.62s | 283.3s                            | ---                                                        | ---                                                                          |
 
 
 ## Credit

@@ -37,10 +37,11 @@ BF_ASSERT(BF_SEQ_AT_1(,(1)(2)(3)), 1)
 // Returns 1 if the identifiers x and y are equal and otherwise 0.
 // For this to work a BF_EQUAL_X_X must be defined to ",1", where X is the
 // identifier that shall be compared.
-#define BF_EQUAL(x,y) BF_CHECK(BF_EQUAL_##x##_##y)
-#define BF_CHECK(...) BF_TUPLE_AT_2(__VA_ARGS__,0,)
+#define BF_EQUAL(x,y) BF_CHECK0(BF_EQUAL_##x##_##y)
+#define BF_CHECK0(...) BF_TUPLE_AT_2(__VA_ARGS__,0,)
+#define BF_CHECK(...) BF_TUPLE_AT_2(__VA_ARGS__,)
 
-#define BF_IS_0(x) BF_CHECK(BF_EQUAL_0_##x)
+#define BF_IS_0(x) BF_CHECK0(BF_EQUAL_0_##x)
 #define BF_EQUAL_0_0 ,1
 BF_ASSERT(BF_IS_0(0), 1)
 BF_ASSERT(BF_IS_0(24), 0)
@@ -135,8 +136,8 @@ BF_ASSERT(BF__O(,i,tl,t,tr,is,(a)(b)), (,i,tl,t,tr,is,a,(b))(_(t)))
 
 
 // Eats the first element from a tape stack, without removing the terminating (_)
-#define BF_TAPE_EAT(x) BF_PCAT(BF_TAPE_EAT,BF_CHECK(BF_TAPE_CHECK_##x))
-#define BF_TAPE_CHECK__ ,1
+#define BF_TAPE_EAT(x) BF_CHECK(BF_TAPE_CHECK_##x,BF_TAPE_EAT0)
+#define BF_TAPE_CHECK__ ,BF_TAPE_EAT1
 #define BF_TAPE_EAT0
 #define BF_TAPE_EAT1 (_)
 BF_ASSERT(BF_TAPE_EAT(2)(1)(_) BF_TAPE_EAT(1)(_) BF_TAPE_EAT(_), (1)(_) (_) (_))
@@ -145,7 +146,8 @@ BF_ASSERT(BF_TAPE_EAT(2)(1)(_) BF_TAPE_EAT(1)(_) BF_TAPE_EAT(_), (1)(_) (_) (_))
 // Returns the first element from a tape stack.
 // If the tape is (_), it will output 0.
 #define BF_TAPE_AT_1(P,x) BF_FX(BF_TAPE_AT_1_1a,BF_SEQ_SPLAT P##x)
-#define BF_TAPE_AT_1_1a(x,seq) BF_PCAT(BF_TAPE_AT_1_,BF_CHECK(BF_TAPE_CHECK_##x))(x)
+#define BF_TAPE_AT_1_1a(x,seq) BF_CHECK(BF_TAPE_AT_CHECK_##x,BF_TAPE_AT_1_0)(x)
+#define BF_TAPE_AT_CHECK__ ,BF_TAPE_AT_1_1
 #define BF_TAPE_AT_1_0(x) x
 #define BF_TAPE_AT_1_1(x) 0
 BF_ASSERT(BF_TAPE_AT_1(,(2)(1)(_)),2)
@@ -198,11 +200,11 @@ BF_ASSERT(BF__E(,i,tl,1,tr,((a)(b))is,(c)(d)), (,i,tl,1,tr,((a)(b))is,a,(b)(c)(d
 
 
 // Branches to BF_TO_CODE... for different values of f
-#define BF__TO_CODE(P,o,is,_1,_2,_3,f,...) BF_PCAT(BF_TO_CODE_,BF_CHECK(BF_TO_CODE_SWITCH_##f))(,P##f,P##o,P##is,,,,TO_CODE,P##__VA_ARGS__)
+#define BF__TO_CODE(P,o,is,_1,_2,_3,f,...) BF_CHECK(BF_TO_CODE_SWITCH_##f,BF_TO_CODE_0)(,P##f,P##o,P##is,,,,TO_CODE,P##__VA_ARGS__)
 
-#define BF_TO_CODE_SWITCH_TO_CODE_Q ,Q
-#define BF_TO_CODE_SWITCH_B ,B
-#define BF_TO_CODE_SWITCH_E ,E
+#define BF_TO_CODE_SWITCH_TO_CODE_Q ,BF_TO_CODE_Q
+#define BF_TO_CODE_SWITCH_B ,BF_TO_CODE_B
+#define BF_TO_CODE_SWITCH_E ,BF_TO_CODE_E
 
 // Default: append the instruction to the sequence
 #define BF_TO_CODE_0(P,x,o,...) (,P##o(P##x),P##__VA_ARGS__)
@@ -301,29 +303,29 @@ BF_ASSERT(BF___i(,i,tl,2,tr,is,(7)(a)(b)), (,i,tl,9,tr,is,a,(b)))
 #define BF_MERGE1(P,o,a1,...)               (,(,BF_NOSCAN P##o,P##a1)                                              ,,,,,BF_PCAT(MERGE,BF_IS_EMPTY(P##a1)),P##__VA_ARGS__)
 
 
-#define BF_MERGE_DO1234_0(P,a1,a2,a3,a4,...) BF_MERGE_DO124(BF_CHECK(BF_MERGE_1234_##a1##a2##a3##a4))(,P##a1,P##a2,P##a3,P##a4)
+#define BF_MERGE_DO1234_0(P,a1,a2,a3,a4,...) BF_MERGE_DO124(BF_CHECK0(BF_MERGE_1234_##a1##a2##a3##a4))(,P##a1,P##a2,P##a3,P##a4)
 #define BF_MERGE_DO124_1(...) 1234
 #define BF_MERGE_DO124_CAT(a,b) a##b
 #define BF_MERGE_DO124(x) BF_MERGE_DO124_CAT(BF_MERGE_DO124_,x)
 
-#define BF_MERGE_DO124_0(P,a1,a2,a3,a4) BF_MERGE_DO123(BF_CHECK(BF_MERGE_124_##a1##a2##a4))(,P##a1,P##a2,P##a3)
+#define BF_MERGE_DO124_0(P,a1,a2,a3,a4) BF_MERGE_DO123(BF_CHECK0(BF_MERGE_124_##a1##a2##a4))(,P##a1,P##a2,P##a3)
 #define BF_MERGE_DO123_1(...) 124
 #define BF_MERGE_DO123_3(...) 124_3
 #define BF_MERGE_DO123_CAT(a,b) a##b
 #define BF_MERGE_DO123(x) BF_MERGE_DO123_CAT(BF_MERGE_DO123_,x)
 
-#define BF_MERGE_DO123_0(P,a1,a2,a3) BF_MERGE_DO13(BF_CHECK(BF_MERGE_123_##a1##a2##a3))(,P##a1,P##a2,P##a3)
+#define BF_MERGE_DO123_0(P,a1,a2,a3) BF_MERGE_DO13(BF_CHECK0(BF_MERGE_123_##a1##a2##a3))(,P##a1,P##a2,P##a3)
 #define BF_MERGE_DO13_1(...) 123
 #define BF_MERGE_DO13_CAT(a,b) a##b
 #define BF_MERGE_DO13(x) BF_MERGE_DO13_CAT(BF_MERGE_DO13_,x)
 
-#define BF_MERGE_DO13_0(P,a1,a2,a3) BF_MERGE_DO12(BF_CHECK(BF_MERGE_13_##a1##a3))(,P##a1,P##a2)
+#define BF_MERGE_DO13_0(P,a1,a2,a3) BF_MERGE_DO12(BF_CHECK0(BF_MERGE_13_##a1##a3))(,P##a1,P##a2)
 #define BF_MERGE_DO12_1(...) 13
 #define BF_MERGE_DO12_2(...) 13_2
 #define BF_MERGE_DO12_CAT(a,b) a##b
 #define BF_MERGE_DO12(x) BF_MERGE_DO12_CAT(BF_MERGE_DO12_,x)
 
-#define BF_MERGE_DO12_0(P,a1,a2) BF_MERGE_DO1(BF_CHECK(BF_MERGE_12_##a1##a2))
+#define BF_MERGE_DO12_0(P,a1,a2) BF_MERGE_DO1(BF_CHECK0(BF_MERGE_12_##a1##a2))
 #define BF_MERGE_DO1_0 1
 #define BF_MERGE_DO1_1 12
 #define BF_MERGE_DO1_CAT(a,b) a##b
@@ -404,22 +406,26 @@ BF_ASSERT(BF___i(,i,tl,2,tr,is,(7)(a)(b)), (,i,tl,9,tr,is,a,(b)))
 #define BF_MERGE_123_BRE _R0,1
 
 
-#define BF_L0_SWITCH_0 ,1
-#define BF_L0_SWITCH__ ,2
+#define BF_L0_TO_GUIDE_SWITCH_0 ,BF_L0_TO_GUIDE_1
+#define BF_L0_TO_GUIDE_SWITCH__ ,BF_L0_TO_GUIDE_2
 
 #define BF_L0_TO_GUIDE_0(a,f) ,a)f
 #define BF_L0_TO_GUIDE_1(a,f) ,0),
 #define BF_L0_TO_GUIDE_2(a,f) ,0),(_)
 
-#define BF_L0_TO_GUIDE1(a) BF_PCAT(BF_L0_TO_GUIDE_,BF_CHECK(BF_L0_SWITCH_##a))(a,BF_L0_TO_GUIDE2)
-#define BF_L0_TO_GUIDE2(a) BF_PCAT(BF_L0_TO_GUIDE_,BF_CHECK(BF_L0_SWITCH_##a))(a,BF_L0_TO_GUIDE1)
+#define BF_L0_TO_GUIDE1(a) BF_CHECK(BF_L0_TO_GUIDE_SWITCH_##a,BF_L0_TO_GUIDE_0)(a,BF_L0_TO_GUIDE2)
+#define BF_L0_TO_GUIDE2(a) BF_CHECK(BF_L0_TO_GUIDE_SWITCH_##a,BF_L0_TO_GUIDE_0)(a,BF_L0_TO_GUIDE1)
 
+
+
+#define BF_L0_EXEC_SWITCH_0 ,BF_L0_EXEC_1
+#define BF_L0_EXEC_SWITCH__ ,BF_L0_EXEC_2
 
 #define BF_L0_EXEC_0(a,b,f) f((b)a
 #define BF_L0_EXEC_1(a,b,f) a,0
 
-#define BF_L0_EXEC1(a,b) BF_PCAT(BF_L0_EXEC_,BF_CHECK(BF_L0_SWITCH_##b))(a,b,BF_L0_EXEC2)
-#define BF_L0_EXEC2(a,b) BF_PCAT(BF_L0_EXEC_,BF_CHECK(BF_L0_SWITCH_##b))(a,b,BF_L0_EXEC1)
+#define BF_L0_EXEC1(a,b) BF_CHECK(BF_L0_EXEC_SWITCH_##b,BF_L0_EXEC_0)(a,b,BF_L0_EXEC2)
+#define BF_L0_EXEC2(a,b) BF_CHECK(BF_L0_EXEC_SWITCH_##b,BF_L0_EXEC_0)(a,b,BF_L0_EXEC1)
 
 
 #define BF_L0_DO(t,tr) BF_SCAN(BF_L0_EXEC1 BF_LPAREN BF_L0_TO_GUIDE1(t)tr)
